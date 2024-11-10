@@ -1,62 +1,11 @@
 import React, { useState } from 'react';
+import { statusStyles, statusOptions } from './../config/statusConfig.jsx';
 
 const StatusDropdown = ({ initialStatus, onChangeStatus }) => {
-    // Capitalize the initial status
+    console.log(initialStatus)
     const capitalizeStatus = (status) => status.toUpperCase();
-
     const initialStatusCapitalized = capitalizeStatus(initialStatus);
     const [status, setStatus] = useState(initialStatusCapitalized);
-
-    // Define color classes for each status
-    const statusStyles = {
-        'OPEN': 'bg-blue-100 text-blue-700',
-        'ACCEPT': 'bg-green-100 text-green-700',
-        'REJECT': 'bg-red-100 text-red-700',
-        'APPROVED BY HOME': 'bg-yellow-100 text-yellow-700',
-        'APPROVED': 'bg-green-200 text-green-800',
-        'REALIZED': 'bg-purple-100 text-purple-700',
-        'MATCHED': 'bg-indigo-100 text-indigo-700',
-        'REJECTED': 'bg-red-100 text-red-700',
-        'WITHDRAWN': 'bg-gray-100 text-gray-700',
-        'FINISHED': 'bg-gray-200 text-gray-800',
-        'APPROVAL_BROKEN': 'bg-red-200 text-red-800',
-    };
-
-    // Define status options based on the initial status
-    const statusOptions = {
-        'OPEN': [
-            { label: 'OPEN', color: 'bg-blue-100 text-blue-700' },
-            { label: 'ACCEPT', color: 'bg-green-100 text-green-700' },
-            { label: 'REJECT', color: 'bg-red-100 text-red-700' }
-        ],
-        'APPROVED BY HOME': [
-            { label: 'APPROVED BY HOME', color: 'bg-yellow-100 text-yellow-700' },
-            { label: 'APPROVED', color: 'bg-green-200 text-green-800' },
-            { label: 'REJECT', color: 'bg-red-100 text-red-700' }
-        ],
-        'APPROVED': [
-            { label: 'APPROVED', color: 'bg-green-200 text-green-800' },
-            { label: 'REALIZED', color: 'bg-purple-100 text-purple-700' }
-        ],
-        'REALIZED': [
-            { label: 'REALIZED', color: 'bg-purple-100 text-purple-700' }
-        ],
-        'MATCHED': [
-            { label: 'MATCHED', color: 'bg-indigo-100 text-indigo-700' }
-        ],
-        'REJECTED': [
-            { label: 'REJECTED', color: 'bg-red-100 text-red-700' }
-        ],
-        'WITHDRAWN': [
-            { label: 'WITHDRAWN', color: 'bg-gray-100 text-gray-700' }
-        ],
-        'FINISHED': [
-            { label: 'FINISHED', color: 'bg-gray-200 text-gray-800' }
-        ],
-        'APPROVAL_BROKEN': [
-            { label: 'APPROVAL BROKEN', color: 'bg-red-200 text-red-800' }
-        ],
-    };
 
     // Handle status change
     const handleStatusChange = (event) => {

@@ -2,7 +2,7 @@ import React from "react";
 import StatusDropdown from "./StatusDropdown.jsx";
 
 const ApplicationCard = ({id, fullName,home_mc,home_lc, phoneNumber, opportunityTitle, status,slot, handleStatusChange,handleDownload }) => {
-
+    console.log(status)
     return (
         <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md border">
             <div className="flex justify-between items-center mb-2">
