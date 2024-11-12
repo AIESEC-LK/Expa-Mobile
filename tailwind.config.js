@@ -48,6 +48,14 @@ export default {
             light: '#FED7D7',  // red-200
             DEFAULT: '#742A2A', // red-800
           },
+          realizationBroken: {
+            light: '#FED7D7',  // red-200
+            DEFAULT: '#742A2A', // red-800
+          },
+          completed: {
+            light: '#EDF2F7',  // gray-200
+            DEFAULT: '#2D3748', // gray-800
+          }
         }
       }
     }

@@ -14,6 +14,8 @@ const ApplicationsofOpportunitiesIManage = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [jumpPage, setJumpPage] = useState("");
     const [perPage, setPerPage] = useState(30);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
     const [statusChange, setStatusChange] = useState({
         applicationId: null,
         currentStatus: '',
@@ -40,7 +42,6 @@ const ApplicationsofOpportunitiesIManage = () => {
     }, [currentPage]);
 
     const handleDownload = async (applicationId) => {
-        console.log("Download", applicationId);
         const cvUrl = await fetchApplicationCV(applicationId);
         if (cvUrl) {
             const link = document.createElement('a');
@@ -52,24 +53,55 @@ const ApplicationsofOpportunitiesIManage = () => {
         }
     };
 
+    // Filter applications based on search query and status filter
+    const filteredApplications = applications.filter((app) => {
+        const matchesSearch = app.person.full_name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesStatus = statusFilter ? app.status === statusFilter : true;
+        return matchesSearch && matchesStatus;
+    });
+
     return (
         <div className="min-h-screen bg-gray-100 p-4">
             <h1 className="text-lg font-semibold text-gray-800 mb-4">Applications of Opportunities I Manage</h1>
 
+            <div className="flex gap-4 mb-4">
+                <input
+                    type="text"
+                    placeholder="Search by name"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+                />
+
+                <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="w-40 p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+                >
+                    <option value="">All Statuses</option>
+                    <option value="Open">Open</option>
+                    <option value="Accept">Accept</option>
+                    <option value="Reject">Reject</option>
+                    <option value="Approved by Home">Approved by Home</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Realized">Realized</option>
+                </select>
+            </div>
+
             {loading ? <p>Loading...</p> : error ? <p className="text-red-500">{error}</p> : (
                 <div className="overflow-y-auto max-h-[calc(100vh-150px)] flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-4 sm:space-y-0">
-                    {applications.map(app => (
+                    {filteredApplications.map(app => (
                         <ApplicationCard
                             key={app.id}
                             fullName={app.person.full_name}
-                            phoneNumber={app.person.contact_detail.phone}
+                            phoneNumber={app.person.contact_detail ? app.person.contact_detail.phone : "No Phone"}
                             opportunityTitle={app.opportunity.title}
                             status={app.status}
                             slot={app.slot.title}
                             home_mc={app.person.home_mc.name}
                             home_lc={app.person.home_lc.name}
                             id={app.id}
-                            handleDownload={() => handleDownload(app.id)} // Pass a function with app.id as argument
+                            handleDownload={() => handleDownload(app.id)}
                         />
                     ))}
                 </div>

@@ -12,6 +12,8 @@ export const statusStyles = {
     'WITHDRAWN': 'bg-status-withdrawn-light text-status-withdrawn',
     'FINISHED': 'bg-status-finished-light text-status-finished',
     'APPROVAL_BROKEN': 'bg-status-approvalBroken-light text-status-approvalBroken',
+    "REALIZATION_BROKEN": 'bg-status-realizationBroken-light text-status-realizationBroken',
+    "COMPLETED": 'bg-status-finished-light text-status-completed',
 };
 
 export const statusOptions = {
@@ -50,5 +52,11 @@ export const statusOptions = {
     ],
     'APPROVAL_BROKEN': [
         { label: 'APPROVAL BROKEN', color: 'bg-status-approvalBroken-light text-status-approvalBroken' }
+    ],
+    "REALIZATION_BROKEN": [
+        { label: 'REALIZATION BROKEN', color: 'bg-status-realizationBroken-light text-status-realizationBroken' }
+    ],
+    "COMPLETED": [
+        { label: 'COMPLETED', color: 'bg-status-finished-light text-status-completed' }
     ],
 };
