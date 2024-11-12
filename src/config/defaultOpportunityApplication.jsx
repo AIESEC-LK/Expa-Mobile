@@ -1,7 +1,10 @@
-const applicationFetchConfig = (page, perPage, q = "") => ({
+const applicationFetchConfig = (page, perPage, q = "", statuses = []) => ({
     page,
     perPage,
-    filters: { my: "opportunity" },
+    filters: {
+        my: "opportunity",
+        ...(statuses.length > 0 ? { statuses } : {})  // Only add statuses if it's not empty
+    },
     q,
     applicant_name: true,
     email: true,
