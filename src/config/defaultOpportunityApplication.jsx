@@ -1,8 +1,8 @@
-const applicationFetchConfig = (page, perPage) => ({
+const applicationFetchConfig = (page, perPage, q = "") => ({
     page,
     perPage,
     filters: { my: "opportunity" },
-    q: "",
+    q,
     applicant_name: true,
     email: true,
     opportunity: true,
