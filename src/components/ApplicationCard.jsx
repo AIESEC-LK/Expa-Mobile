@@ -1,8 +1,8 @@
+// ApplicationCard.jsx
 import React from "react";
 import StatusDropdown from "./StatusDropdown.jsx";
 
-const ApplicationCard = ({id, fullName,home_mc,home_lc, phoneNumber, opportunityTitle, status,slot, handleStatusChange,handleDownload }) => {
-    console.log(status)
+const ApplicationCard = ({ id, fullName, home_mc, home_lc, phoneNumber, opportunityTitle, status, slot, handleStatusChange, handleDownload }) => {
     return (
         <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md border">
             <div className="flex justify-between items-center mb-2">
@@ -31,8 +31,8 @@ const ApplicationCard = ({id, fullName,home_mc,home_lc, phoneNumber, opportunity
                     href="#"
                     className="text-gray-500 text-sm flex items-center"
                     onClick={(e) => {
-                        e.preventDefault(); // Prevent the default anchor behavior
-                        handleDownload(id); // Replace applicationId with the actual ID variable
+                        e.preventDefault(); // Prevent default anchor behavior
+                        handleDownload(); // Call handleDownload directly, since app ID is passed as an argument
                     }}
                 >
                     <div className="flex flex-row">
@@ -56,7 +56,6 @@ const ApplicationCard = ({id, fullName,home_mc,home_lc, phoneNumber, opportunity
                         </svg>
                     </div>
                 </a>
-
             </div>
         </div>
     );

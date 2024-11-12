@@ -40,6 +40,7 @@ const ApplicationsofOpportunitiesIManage = () => {
     }, [currentPage]);
 
     const handleDownload = async (applicationId) => {
+        console.log("Download", applicationId);
         const cvUrl = await fetchApplicationCV(applicationId);
         if (cvUrl) {
             const link = document.createElement('a');
@@ -59,6 +60,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                 <div className="overflow-y-auto max-h-[calc(100vh-150px)] flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-4 sm:space-y-0">
                     {applications.map(app => (
                         <ApplicationCard
+                            key={app.id}
                             fullName={app.person.full_name}
                             phoneNumber={app.person.contact_detail.phone}
                             opportunityTitle={app.opportunity.title}
@@ -67,7 +69,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                             home_mc={app.person.home_mc.name}
                             home_lc={app.person.home_lc.name}
                             id={app.id}
-                            handleDownload={() => handleDownload}
+                            handleDownload={() => handleDownload(app.id)} // Pass a function with app.id as argument
                         />
                     ))}
                 </div>

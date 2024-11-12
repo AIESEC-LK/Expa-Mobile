@@ -29,6 +29,10 @@ export const statusOptions = {
         { label: 'APPROVED', color: 'bg-status-approved-light text-status-approved' },
         { label: 'REALIZED', color: 'bg-status-realized-light text-status-realized' }
     ],
+    'ACCEPTED': [
+        { label: 'ACCEPTED', color: 'bg-status-accept-light text-status-accept' },
+        { label: 'APPROVED BY HOME', color: 'bg-status-approvedByHome-light text-status-approvedByHome' }
+    ],
     'REALIZED': [
         { label: 'REALIZED', color: 'bg-status-realized-light text-status-realized' }
     ],
