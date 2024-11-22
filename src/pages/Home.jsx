@@ -1,11 +1,37 @@
 // HomePage.js
 import React from "react";
+import { Link } from 'react-router-dom';
+
+const Card = ({ title, description, link }) => {
+    return (
+        <Link to={link} className="w-full sm:w-1/2 md:w-1/3 p-4">
+            <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105">
+                <div className="p-6">
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h2>
+                    <p className="text-gray-600 text-sm">{description}</p>
+                </div>
+            </div>
+        </Link>
+    );
+};
 
 const HomePage = () => {
     return (
-        <div>
-            <h1 className="text-2xl font-bold text-gray-800">Home Page</h1>
-            <p>Welcome to the main page! Use the navigation to go to other pages.</p>
+        <div className="container mx-auto p-6">
+            <div className="flex flex-wrap justify-center gap-6">
+                {/* ICX Card */}
+                <Card
+                    title="ICX"
+                    description="Explore ICX opportunities"
+                    link="/icx/applications/my-opportunities"
+                />
+                {/* OGX Card */}
+                <Card
+                    title="OGX"
+                    description="Discover OGX opportunities"
+                    link="/ogx" // Replace with your actual route
+                />
+            </div>
         </div>
     );
 };
