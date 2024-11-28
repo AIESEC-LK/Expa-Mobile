@@ -1,11 +1,16 @@
 // HomePage.js
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Card = ({ title, description, link }) => {
     return (
         <Link to={link} className="w-full sm:w-1/2 md:w-1/3 p-4">
             <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105">
+                <img 
+                    src="/AIESEC-Human-Blue.png" 
+                    alt={`${title} Logo`} 
+                    className="w-full h-32 object-contain p-4" 
+                />
                 <div className="p-6">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h2>
                     <p className="text-gray-600 text-sm">{description}</p>
@@ -29,7 +34,7 @@ const HomePage = () => {
                 <Card
                     title="OGX"
                     description="Discover OGX opportunities"
-                    link="/ogx" // Replace with your actual route
+                    link="/ogx"
                 />
             </div>
         </div>
