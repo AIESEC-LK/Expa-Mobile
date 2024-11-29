@@ -108,9 +108,10 @@ const ApplicationsofOpportunitiesIManage = () => {
                             <input
                                 type="text"
                                 placeholder="Search..."
-                                className="w-full sm:w-1/3 p-1 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+                                className="w-full sm:w-1/3 p-1 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 "
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
+                                disabled
                             />
 
                             {/* Dropdown for Status Filter */}

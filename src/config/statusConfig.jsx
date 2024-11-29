@@ -83,3 +83,20 @@ export const statusOptions = {
         { label: 'ACCEPTED', color: 'bg-status-accept-light text-status-accept' }
     ],
 };
+
+export const rejectionReasons = {
+    '1': { reason: 'Project is canceled', id: 20851 },
+    '2': { reason: 'AIESEC is unresponsive', id: 20850 },
+    '3': { reason: 'Partner is unresponsive', id: 20849 },
+    '4': { reason: 'EP is unresponsive', id: 20848 },
+    '5': { reason: 'Problem with the timeline or realization date', id: 20847 },
+    '6': { reason: 'Required citizenship not matching', id: 20846 },
+    '7': { reason: 'Poor language proficiency', id: 20845 },
+    '8': { reason: 'Lack of professional experience', id: 20844 },
+    '9': { reason: 'Position is filled', id: 20843 },
+    '10': { reason: 'Skills are not suitable', id: 20842 },
+    '11': { reason: 'The background is not suitable', id: 20841 },
+    '12': { reason: 'Incomplete/low quality of CV/profile', id: 20840 }
+};
+
+
