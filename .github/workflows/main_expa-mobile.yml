@@ -23,17 +23,17 @@ jobs:
           npm install
           npm run build
 
-      # - name: Prepare artifact for deployment
-      #   run: |
-      #     mkdir artifact
-      #     mv dist/* artifact/ # Adjust 'dist/' if your output folder is different
-      #   shell: bash
+      - name: Prepare artifact for deployment
+        run: |
+          mkdir artifact
+          mv dist/* artifact/ # Adjust 'dist/' if your output folder is different
+        shell: bash
 
-      # - name: Upload artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: node-app
-      #     path: artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app
+          path: artifact
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,10 +45,10 @@ jobs:
       id-token: write # Required for requesting the JWT
 
     steps:
-    #   - name: Download artifact from build job
-    #     uses: actions/download-artifact@v4
-    #     with:
-    #       name: node-app
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: node-app
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -63,4 +63,4 @@ jobs:
         with:
           app-name: 'expa-mobile'
           slot: 'production'
-          package: dist
+          package: artifact
