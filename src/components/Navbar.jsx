@@ -1,28 +1,36 @@
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import {fetchApplications} from "../api/ApplicationIndexQuery_GetTheAllTheApplicationsManageByUser.jsx";
-import applicationFetchConfig from "../config/defaultOpportunityApplication.jsx";
-import {useEffect} from "react";
-import {useCurrentPersonData} from "../api/CurrentPersonQuery.jsx";
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useCurrentPersonData } from "../api/CurrentPersonQuery.jsx";
+import { useEffect, useState } from "react";
 
 const navigation = [
-    { name: 'ICX', href: '/icx/applications/my-opportunities', current: true },
-    { name: 'OGX', href: '/ogx', current: true },
-]
+    { name: 'ICX', href: '/icx/applications/my-opportunities' },
+    { name: 'OGX', href: '/ogx' },
+];
 
 function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
     const personData = useCurrentPersonData();
+    const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+    // Update the current path on navigation
+    useEffect(() => {
+        const handlePathChange = () => setCurrentPath(window.location.pathname);
+        window.addEventListener("popstate", handlePathChange);
+        return () => window.removeEventListener("popstate", handlePathChange);
+    }, []);
+
     if (!personData) return <p>.</p>;
+
     return (
         <Disclosure as="nav" style={{ backgroundColor: '#037EF3' }}>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                        {/* Mobile menu button*/}
+                        {/* Mobile menu button */}
                         <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Open main menu</span>
@@ -34,7 +42,7 @@ export default function Navbar() {
                         <div className="flex shrink-0 items-center">
                             <img
                                 alt="Your Company"
-                                src="/AIESEC-Human-Blue.png"
+                                src="/White-Blue-Logo.png"
                                 className="h-8 w-auto"
                             />
                         </div>
@@ -44,9 +52,8 @@ export default function Navbar() {
                                     <a
                                         key={item.name}
                                         href={item.href}
-                                        aria-current={item.current ? 'page' : undefined}
                                         className={classNames(
-                                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:text-white',
+                                            item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                             'rounded-md px-3 py-2 text-sm font-medium',
                                         )}
                                     >
@@ -95,9 +102,8 @@ export default function Navbar() {
                             key={item.name}
                             as="a"
                             href={item.href}
-                            aria-current={item.current ? 'page' : undefined}
                             className={classNames(
-                                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                 'block rounded-md px-3 py-2 text-base font-medium',
                             )}
                         >
@@ -107,5 +113,5 @@ export default function Navbar() {
                 </div>
             </DisclosurePanel>
         </Disclosure>
-    )
+    );
 }
