@@ -4,6 +4,7 @@ import PaginationControls from "../components/PaginationControls";
 import { fetchApplications } from "../api/ApplicationIndexQuery_GetTheAllTheApplicationsManageByUser";
 import applicationFetchConfig from "../config/defaultOpportunityApplication.jsx";
 import {fetchApplicationCV} from "../api/DownloadCV.jsx";
+import {changeStatusOfApplication} from "../api/ApplicationMutations.jsx";
 
 const ApplicationsofOpportunitiesIManage = () => {
     const [applications, setApplications] = useState([]);
@@ -33,7 +34,7 @@ const ApplicationsofOpportunitiesIManage = () => {
 
     useEffect(() => {
         fetchData(currentPage);
-    }, [currentPage, searchQuery, statusFilter]);
+    }, [currentPage, searchQuery, statusFilter, ]);
 
     // Handle status filter selection
     const handleStatusChange = (status) => {
@@ -93,13 +94,13 @@ const ApplicationsofOpportunitiesIManage = () => {
                             <div className="relative sm:ml-auto mt-2 sm:mt-0 sm:mr-20">
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="w-full sm:w-auto p-1 rounded-md border border-gray-300 text-left text-sm"
+                                    className="w-full sm:w-full p-1 rounded-md border border-gray-300 text-left text-sm"
                                 >
                                     Filter by Status
                                 </button>
                                 {isDropdownOpen && (
                                     <div
-                                        className="absolute top-full mt-1 w-full sm:w-auto bg-white border border-gray-300 rounded-md shadow-lg p-2 max-h-48 overflow-y-auto"
+                                        className="absolute top-full mt-1 w-full sm:w-full bg-white border border-gray-300 rounded-md shadow-lg p-2 max-h-48 overflow-y-auto"
                                     >
                                         {["open", "matched", "accepted", "rejected", "approved_by_home", "approved", "realized"].map(
                                             (status) => (
@@ -111,7 +112,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                                                         onChange={() => handleStatusChange(status)}
                                                         className="form-checkbox h-4 w-4 text-blue-600"
                                                     />
-                                                    <span className="text-gray-700 text-sm capitalize">{status}</span>
+                                                    <span className="text-gray-700 text-sm capitalize">{status.replace(/_/g, ' ')}</span>
                                                 </label>
                                             )
                                         )}
@@ -133,6 +134,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                                     home_lc={app.person.home_lc.name}
                                     handleDownload={() => handleDownload(app.id)}
                                     id={app.id}
+                                    ChangeStatusOfApplication={changeStatusOfApplication}
                                 />
                             ))}
                         </div>
