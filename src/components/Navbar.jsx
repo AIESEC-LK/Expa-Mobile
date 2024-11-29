@@ -6,8 +6,8 @@ import {useEffect} from "react";
 import {useCurrentPersonData} from "../api/CurrentPersonQuery.jsx";
 
 const navigation = [
-    { name: 'ICX', href: '#', current: true },
-    { name: 'OGX', href: '#', current: false },
+    { name: 'ICX', href: '/icx/applications/my-opportunities', current: true },
+    { name: 'OGX', href: '/ogx', current: true },
 ]
 
 function classNames(...classes) {

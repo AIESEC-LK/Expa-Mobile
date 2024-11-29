@@ -26,14 +26,14 @@ const HomePage = () => {
             <div className="flex flex-wrap justify-center gap-6">
                 {/* ICX Card */}
                 <Card
-                    title="ICX"
-                    description="Explore ICX opportunities"
+                    title="iCX"
+                    description="View iCX Applications of Opportunities I Manage"
                     link="/icx/applications/my-opportunities"
                 />
                 {/* OGX Card */}
                 <Card
-                    title="OGX"
-                    description="Discover OGX opportunities"
+                    title="oGX"
+                    description="View oGX Signups and Assign Managers"
                     link="/ogx"
                 />
             </div>
