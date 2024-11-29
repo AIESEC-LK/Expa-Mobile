@@ -22,7 +22,6 @@ export const statusStyles = {
 
 export const statusOptions = {
     'OPEN': [
-        { label: 'OPEN', color: 'bg-status-open-light text-status-open' },
         { label: 'ACCEPTED', color: 'bg-status-accept-light text-status-accept' },
         { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }
     ],

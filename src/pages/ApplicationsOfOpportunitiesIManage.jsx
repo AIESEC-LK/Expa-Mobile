@@ -103,7 +103,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                         Applications of Opportunities I Manage
                     </h1>
                     <div className="min-h-screen bg-gray-100 p-4">
-                        <div className="mb-4 flex flex-col sm:flex-row justify-between">
+                        <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
                             {/* Search Bar */}
                             <input
                                 type="text"
@@ -117,7 +117,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                             <div className="relative sm:ml-auto mt-2 sm:mt-0 sm:mr-20" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="w-full sm:w-auto p-1 rounded-md border border-gray-300 text-left text-sm"
+                                    className="w-full sm:w-auto ml-8 p-1 rounded-md border border-gray-300 text-left text-sm"
                                 >
                                     Filter by Status
                                 </button>
