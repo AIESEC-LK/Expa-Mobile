@@ -5,6 +5,7 @@ import ApplicationsOfOpportunitiesIManage from "./pages/ApplicationsOfOpportunit
 import HomePage from "./pages/Home.jsx";
 import { Layout } from "./pages/Layout.jsx";
 import OGXPage from "./pages/OGXPage.jsx"; // Ensure OGXPage exists
+import Auth from "./components/Auth.jsx";
 
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                             element={<ApplicationsOfOpportunitiesIManage />}
                         />
                         <Route path="/ogx" element={<OGXPage />} /> {/* OGX Page */}
+                        <Route path="/auth" element={<Auth />} /> {/*temporary Auth Page */}
                     </Route>
                 </Routes>
             </Router>
