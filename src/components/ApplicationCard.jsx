@@ -2,7 +2,7 @@
 import React from "react";
 import StatusDropdown from "./StatusDropdown.jsx";
 
-const ApplicationCard = ({ id, fullName, home_mc, home_lc, phoneNumber, opportunityTitle, status, slot, handleStatusChange, handleDownload }) => {
+const ApplicationCard = ({ id, fullName, home_mc, home_lc, phoneNumber, opportunityTitle, status, slot, handleDownload, ChangeStatusOfApplication }) => {
     return (
         <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md border">
             <div className="flex justify-between items-center mb-2">
@@ -12,7 +12,7 @@ const ApplicationCard = ({ id, fullName, home_mc, home_lc, phoneNumber, opportun
                 </div>
                 <StatusDropdown
                     initialStatus={status}
-                    onChangeStatus={(newStatus) => handleStatusChange(id, newStatus)}
+                    onChangeStatus={(newStatus) => ChangeStatusOfApplication(id, newStatus)}
                 />
             </div>
             <p className="text-sm text-gray-500 italic mb-2">Opportunity - {opportunityTitle}</p>
