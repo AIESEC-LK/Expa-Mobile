@@ -112,7 +112,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                                                         onChange={() => handleStatusChange(status)}
                                                         className="form-checkbox h-4 w-4 text-blue-600"
                                                     />
-                                                    <span className="text-gray-700 text-sm capitalize">{status}</span>
+                                                    <span className="text-gray-700 text-sm capitalize">{status.replace(/_/g, ' ')}</span>
                                                 </label>
                                             )
                                         )}
