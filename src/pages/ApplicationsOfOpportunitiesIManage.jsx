@@ -4,6 +4,7 @@ import PaginationControls from "../components/PaginationControls";
 import { fetchApplications } from "../api/ApplicationIndexQuery_GetTheAllTheApplicationsManageByUser";
 import applicationFetchConfig from "../config/defaultOpportunityApplication.jsx";
 import {fetchApplicationCV} from "../api/DownloadCV.jsx";
+import {changeStatusOfApplication} from "../api/ApplicationMutations.jsx";
 
 const ApplicationsofOpportunitiesIManage = () => {
     const [applications, setApplications] = useState([]);
@@ -33,7 +34,7 @@ const ApplicationsofOpportunitiesIManage = () => {
 
     useEffect(() => {
         fetchData(currentPage);
-    }, [currentPage, searchQuery, statusFilter]);
+    }, [currentPage, searchQuery, statusFilter, ]);
 
     // Handle status filter selection
     const handleStatusChange = (status) => {
@@ -133,6 +134,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                                     home_lc={app.person.home_lc.name}
                                     handleDownload={() => handleDownload(app.id)}
                                     id={app.id}
+                                    ChangeStatusOfApplication={changeStatusOfApplication}
                                 />
                             ))}
                         </div>

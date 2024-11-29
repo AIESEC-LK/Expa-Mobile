@@ -10,7 +10,11 @@ const StatusDropdown = ({ initialStatus, onChangeStatus }) => {
     // Handle status change
     const handleStatusChange = (event) => {
         const newStatus = capitalizeStatus(event.target.value);
-        setStatus(newStatus);
+        if(newStatus === "ACCEPTED"){
+            setStatus("MATCHED");
+        }else{
+            setStatus(newStatus);
+        }
         onChangeStatus(newStatus); // Callback to inform parent component of the change
     };
 
