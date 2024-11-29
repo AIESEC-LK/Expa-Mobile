@@ -29,11 +29,14 @@ jobs:
           mv dist/* artifact/ # Adjust 'dist/' if your output folder is different
         shell: bash
 
+      - name: Zip artifact
+        run: zip -r artifact.zip artifact
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: artifact
+          path: artifact.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,6 +52,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
+          
+      - name: Unzip downloaded artifact
+        run: unzip artifact.zip
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -62,5 +68,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'expa-mobile'
-          slot: 'production'
+          slot-name: 'production'
           package: artifact
