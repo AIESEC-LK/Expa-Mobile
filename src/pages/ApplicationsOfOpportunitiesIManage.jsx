@@ -94,13 +94,13 @@ const ApplicationsofOpportunitiesIManage = () => {
                             <div className="relative sm:ml-auto mt-2 sm:mt-0 sm:mr-20">
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="w-full sm:w-auto p-1 rounded-md border border-gray-300 text-left text-sm"
+                                    className="w-full sm:w-full p-1 rounded-md border border-gray-300 text-left text-sm"
                                 >
                                     Filter by Status
                                 </button>
                                 {isDropdownOpen && (
                                     <div
-                                        className="absolute top-full mt-1 w-full sm:w-auto bg-white border border-gray-300 rounded-md shadow-lg p-2 max-h-48 overflow-y-auto"
+                                        className="absolute top-full mt-1 w-full sm:w-full bg-white border border-gray-300 rounded-md shadow-lg p-2 max-h-48 overflow-y-auto"
                                     >
                                         {["open", "matched", "accepted", "rejected", "approved_by_home", "approved", "realized"].map(
                                             (status) => (
