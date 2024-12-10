@@ -62,11 +62,11 @@ const OGXApplicationCard = ({
             <div className="flex justify-between items-center mb-2">
                 <div>
                     <h2 className="text-lg font-semibold text-blue-600">{fullName}</h2>
-                    <p className="text-sm text-gray-600">{home_lc} / {home_mc}</p>
+                    <p className="text-sm text-gray-600">EP ID - {id} </p>
                 </div>
-                <p className="text-sm text-gray-600">{status}</p>
+                {/* <p className="text-sm text-gray-600">{status}</p> */}
             </div>
-            <p className="text-sm text-gray-500 italic mb-2">Opportunity - {opportunityTitle}</p>
+            {/* <p className="text-sm text-gray-500 italic mb-2">Opportunity - {opportunityTitle}</p> */}
             <div className="flex items-center gap-2 mb-2">
                 {phoneNumber ? (
                     <a href={`tel:${phoneNumber}`} className="text-blue-600 text-sm">
