@@ -22,9 +22,10 @@ const APPROVE_APPLICATION_MUTATION = `
 `;
 
 const REJECT_APPLICATION_MUTATION = `
-  mutation RejectApplicationMutation($id: ID!) {
-    rejectApplication(id: $id) {
+  mutation RejectApplicationMutation($id: ID!, $reasonId: ID!) {
+    rejectApplication(id: $id, rejection_reason_id: $reasonId) {
       id
+      rejection_reason_id
     }
   }
 `;
@@ -57,9 +58,17 @@ const sendGraphQLRequest = async (mutation, variables) => {
 };
 
 // Main function to change the status of the application
-export const changeStatusOfApplication = async (id, newStatus) => {
+export const changeStatusOfApplication = async (id, newStatus, ...args) => {
+  console.log("Changing status for application ID:", id);
+  console.log("New status:", newStatus);
+
   let mutation;
   let variables = { id };
+
+  if (args.length > 0) {
+    variables.reasonId = args[0];
+    console.log("Additional argument (reasonId):", args[0]);
+  }
 
   switch (newStatus) {
     case "ACCEPTED":

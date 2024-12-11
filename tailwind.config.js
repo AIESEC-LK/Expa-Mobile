@@ -14,6 +14,7 @@ export default {
           },
           accept: {
             light: '#F0FFF4',  // green-100
+            medium: '#48BB78', //green-400
             DEFAULT: '#38A169', // green-700
           },
           reject: {
