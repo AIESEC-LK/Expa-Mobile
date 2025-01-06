@@ -1,141 +1,123 @@
-// import React, { useEffect, useState } from "react";
-// import { fetchManagerSearch } from "../api/fetchManagerSearch.jsx";  // Import fetchManagerSearch from the same file
-// import { updatePersonMutation } from "../api/UpdatePerson.jsx"; // Import updatePersonMutation from the same file
-//
-// const OGXApplicationCard = ({
-//                                 id,
-//                                 fullName,
-//                                 home_mc,
-//                                 home_lc,
-//                                 phoneNumber,
-//                                 opportunityTitle,
-//                                 status,
-//                                 assignedManagers, // Added managers prop
-//                             }) => {
-//
-//     const [showSearch, setShowSearch] = useState(false);
-//     const [searchQuery, setSearchQuery] = useState('');
-//     const [managerResults, setManagerResults] = useState([]);
-//     const [loading, setLoading] = useState(false);
-//
-//     useEffect(() => {
-//         const searchManagers = async () => {
-//             if (searchQuery.trim() === '') {
-//                 setManagerResults([]);
-//                 return;
-//             }
-//
-//             setLoading(true);
-//             try {
-//                 const results = await fetchManagerSearch(searchQuery);
-//                 setManagerResults(results || []);  // Ensure we get an empty array if no results
-//             } catch (error) {
-//                 console.error('Error fetching manager data:', error);
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
-//
-//         if (searchQuery) {
-//             searchManagers();
-//         }
-//     }, [searchQuery]);
-//
-//     const handleManagerClick = async (managerId) => {
-//         // Update person with the selected manager's ID
-//         try {
-//             const managerIds = [...(assignedManagers.map(manager => manager.id) || []), managerId];
-//
-//             // Trigger the mutation
-//             const updatedPerson = await updatePersonMutation(id, managerIds);
-//
-//             // Optionally, you can update the UI state here if needed
-//             console.log('Manager updated successfully', updatedPerson);
-//             // You could also update the assignedManagers state with the new manager
-//         } catch (error) {
-//             console.error('Error updating manager:', error);
-//         }
-//     };
-//
-//     return (
-//         <div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md border">
-//             <div className="flex justify-between items-center mb-2">
-//                 <div>
-//                     <h2 className="text-lg font-semibold text-blue-600">{fullName}</h2>
-//                     <p className="text-sm text-gray-600">EP ID - {id} </p>
-//                 </div>
-//                 {/* <p className="text-sm text-gray-600">{status}</p> */}
-//             </div>
-//             {/* <p className="text-sm text-gray-500 italic mb-2">Opportunity - {opportunityTitle}</p> */}
-//             <div className="flex items-center gap-2 mb-2">
-//                 {phoneNumber ? (
-//                     <a href={`tel:${phoneNumber}`} className="text-blue-600 text-sm">
-//                         +{phoneNumber}
-//                     </a>
-//                 ) : (
-//                     <span className="text-red-600 text-sm">No phone</span>
-//                 )}
-//             </div>
-//
-//             {/* Managers section */}
-//             <div className="mt-4">
-//                 {/* Assigned Managers Section */}
-//                 <h3 className="text-sm font-semibold text-gray-700">Assigned Managers</h3>
-//                 {assignedManagers && assignedManagers.length > 0 ? (
-//                     <ul className="list-disc pl-5 mt-2 text-sm text-gray-600">
-//                         {assignedManagers.map((manager, index) => (
-//                             <li key={index} className="flex items-center gap-2">
-//                                 <span>{manager.full_name}</span>
-//                             </li>
-//                         ))}
-//                     </ul>
-//                 ) : (
-//                     <p className="text-gray-500">No managers assigned</p>
-//                 )}
-//
-//                 {/* Add Manager Section */}
-//                 <div className="mt-4">
-//                     <button
-//                         onClick={() => setShowSearch(!showSearch)}
-//                         className="flex items-center justify-center gap-2 text-blue-600 hover:text-blue-800 focus:outline-none"
-//                     >
-//                         <span>+</span> Add Manager
-//                     </button>
-//
-//                     {showSearch && (
-//                         <div className="mt-2">
-//                             <input
-//                                 type="text"
-//                                 placeholder="Search for a manager..."
-//                                 value={searchQuery}
-//                                 onChange={(e) => setSearchQuery(e.target.value)}
-//                                 className="px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                             />
-//                             {loading ? (
-//                                 <p className="text-gray-500 mt-2">Loading...</p>
-//                             ) : (
-//                                 <ul className="mt-2 text-sm text-gray-600">
-//                                     {managerResults.length > 0 ? (
-//                                         managerResults.map((manager) => (
-//                                             <li
-//                                                 key={manager.id}
-//                                                 className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md"
-//                                                 onClick={() => handleManagerClick(manager.id)}
-//                                             >
-//                                                 <span>{manager.full_name}</span>
-//                                             </li>
-//                                         ))
-//                                     ) : (
-//                                         <p className="text-gray-500">No managers found</p>
-//                                     )}
-//                                 </ul>
-//                             )}
-//                         </div>
-//                     )}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-//
-// export default OGXApplicationCard;
+import React, { useState } from "react";
+
+const OGXApplicationCard = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const epData = {
+    id: "5565703",
+    name: "Amaya Amarasinghe",
+    email: "p.cf1f5a...@aiesec.org",
+    phone: "+94 72 274 5734",
+    aiesecer: true,
+    managers: ["B", "B"],
+    applications: [
+      {
+        projectName: "Global Classroom - India",
+        applicationId: "12579300",
+        projectLC: "AISEC in USJ",
+        opportunityId: "5746653",
+        slotStartDate: "31st January 2025",
+        slotEndDate: "2nd March 2025",
+      },
+      {
+        projectName: "Rooted - Taiwan",
+        applicationId: "12579300",
+        projectLC: "AISEC in NUS",
+        opportunityId: "38473932",
+        slotStartDate: "31st January 2025",
+        slotEndDate: "2nd March 2025",
+      },
+    ],
+  };
+
+  const handleViewApplications = () => {
+    setIsExpanded(prev => !prev);  // Toggle the state
+  };
+
+  return (
+    <div className="flex flex-col max-w-full w-full mx-auto">
+      <div className="bg-white p-3 rounded-lg shadow-md w-full max-w-3xl mx-auto">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-lg font-semibold text-[#037EF3]">{epData.name}</h3>
+          <a href="#" className="text-[#037EF3] text-xs flex items-center">
+            <i className="fas fa-download mr-2"></i> Download CV
+          </a>
+        </div>
+
+        <p className="text-black font-semibold text-sm mb-1">EP ID: {epData.id}</p>
+        <p className="text-[#037EF3] text-xs mb-1">Email: {epData.email}</p>
+        <p className="text-[#037EF3] text-xs mb-2">Phone: {epData.phone}</p>
+
+        <div className="flex items-center gap-2 mt-4">
+          <strong className="text-xs">AIESECer: </strong>
+          <button className="bg-[#037EF3] text-white py-0.5 px-4 rounded-md text-xs">
+            {epData.aiesecer ? "Yes" : "No"}
+          </button>
+        </div>
+
+        <div className="flex justify-between items-center mt-1">
+          <div>
+            <strong className="text-xs">Assigned Managers:</strong>
+            <div className="flex items-center gap-2 flex-wrap mt-2">
+              {epData.managers.map((manager, index) => (
+                <span
+                  key={index}
+                  className="bg-yellow-500 text-white font-bold py-1 px-4 rounded-full text-xs"
+                >
+                  {manager}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <a href="#" className="text-[#037EF3] text-xs flex items-center mt-2">
+            <i className="fas fa-plus mr-2"></i> Add Managers
+          </a>
+        </div>
+
+        {/* Wrapping the text and arrow in the same clickable div */}
+        <div className="flex items-center gap-2 mt-3 cursor-pointer" onClick={handleViewApplications}>
+          <span className="text-[#037EF3] text-xs">
+            {isExpanded ? "View Less" : "View Applications"}
+          </span>
+          <i
+            className={`fas ${isExpanded ? "fa-chevron-up" : "fa-chevron-down"} text-[#037EF3] text-lg`}
+          ></i>
+        </div>
+
+        {/* This is the expanded content */}
+        {isExpanded && (
+          <div className="pt-1 mt-3">
+            {epData.applications.map((app, index) => (
+              <div key={index} className="border-t border-gray-300 pt-2 mb-1">
+                <div className="font-semibold text-[#037EF3] text-sm mb-1">{app.projectName}</div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-600 font-semibold text-xs w-1/3 pr-4">Application ID:</span>
+                  <span className="text-black text-xs w-2/3">{app.applicationId}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-600 font-semibold text-xs w-1/3 pr-4">Project LC:</span>
+                  <span className="text-black text-xs w-2/3">{app.projectLC}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-600 font-semibold text-xs w-1/3 pr-4">Opportunity ID:</span>
+                  <span className="text-black text-xs w-2/3">{app.opportunityId}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-600 font-semibold text-xs w-1/3 pr-4">Slot Start Date:</span>
+                  <span className="text-black text-xs w-2/3">{app.slotStartDate}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-600 font-semibold text-xs w-1/3 pr-4">Slot End Date:</span>
+                  <span className="text-black text-xs w-2/3">{app.slotEndDate}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default OGXApplicationCard;
