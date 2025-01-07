@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ApplicationsOfOpportunitiesIManage from "./pages/ApplicationsOfOpportunitiesIManage.jsx";
 import HomePage from "./pages/Home.jsx";
 import { Layout } from "./pages/Layout.jsx";
+import OGXPage from "./pages/OGXPage.jsx";
 
 const App = () => {
     return (
@@ -16,7 +17,7 @@ const App = () => {
                             path="/icx/applications/my-opportunities"
                             element={<ApplicationsOfOpportunitiesIManage />}
                         />
-                        <Route path="/ogx" element={""} /> {/* OGX Page */}
+                        <Route path="/ogx" element={<OGXPage />} /> {/* OGX Page */}
                     </Route>
                 </Routes>
             </Router>
