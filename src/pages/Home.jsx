@@ -20,23 +20,6 @@ const Card = ({ title, description, link }) => {
 };
 
 const HomePage = () => {
-    useEffect(() => {
-        // Check for 'Authentication' parameter in the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('Authentication')) {
-            // Get the value of the 'Authentication' parameter
-            const authValue = urlParams.get('Authentication');
-
-            // Save the value in local storage
-            localStorage.setItem('Authentication', authValue);
-            console.log('Authentication value saved:', authValue);
-        } else {
-            // Redirect to another site if the parameter is missing
-            const redirectURL = 'https://localhost:3000'; // Replace with the desired redirect URL
-            window.location.href = redirectURL;
-        }
-    }, []);
-
     return (
         <div className="container mx-auto p-6">
             <div className="flex flex-wrap justify-center gap-6">

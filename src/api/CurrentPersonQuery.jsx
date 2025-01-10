@@ -7,7 +7,7 @@ export async function fetchCurrentPersonData() {
     if (cachedPersonData) return cachedPersonData; // Return cached data if it exists
 
     const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-    const AUTH_TOKEN = import.meta.env.VITE_TOKEN;
+    const AUTH_TOKEN = localStorage.getItem("aiesec_token");
 
     const query = `
         query CurrentPersonQuery {

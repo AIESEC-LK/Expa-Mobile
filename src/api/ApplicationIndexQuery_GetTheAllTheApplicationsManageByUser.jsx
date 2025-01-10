@@ -1,7 +1,7 @@
 // src/api/graphql.js
 
 const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = import.meta.env.VITE_TOKEN;
+const AUTH_TOKEN = localStorage.getItem("aiesec_token");
 
 export const APPLICATION_QUERY = `
   query ApplicationIndexQuery($page: Int, $perPage: Int, $filters: ApplicationFilter, $sort: String, $q: String, $applicant_name: Boolean!, $opportunity: Boolean!, $status: Boolean!, $slot: Boolean!, $home_mc: Boolean!, $home_lc: Boolean!, $phone_number: Boolean!) {

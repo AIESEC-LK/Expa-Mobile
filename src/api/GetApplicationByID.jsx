@@ -1,5 +1,5 @@
 const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = import.meta.env.VITE_TOKEN;
+const AUTH_TOKEN = localStorage.getItem("aiesec_token");
 
 export const GET_APPLICATION_QUERY = `
   query GetApplication($id: ID!) {

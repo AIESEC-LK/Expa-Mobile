@@ -1,7 +1,7 @@
 // src/api/graphql.js
 
 const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = import.meta.env.VITE_TOKEN;
+const AUTH_TOKEN = localStorage.getItem("aiesec_token");
 
 // Define GraphQL mutations for different status changes
 
