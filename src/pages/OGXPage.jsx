@@ -63,14 +63,15 @@ query MyPeopleIndexQuery($managers: Boolean!) {
         fetchApplications();
     }, []);
 
-    if (loading) return (<div className="flex justify-center items-center mt-10">
-        <div className="spinner"></div>
-        {/* Show the spinner while loading */}
-    </div>);
+    if (loading) return (
+        <div className="flex justify-center items-center mt-10" style={{height: 'calc(100vh - 350px)'}}>
+            <div className="spinner"></div>
+        </div>
+    );
     if (error) {
         return (
             <div className="error-container">
-                <img src="/Error.jpg" alt="Error Image" className="error-image" />
+                <img src="/Error.jpg" alt="Error Image" className="error-image"/>
             </div>
         );
     }
