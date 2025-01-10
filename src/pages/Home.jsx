@@ -1,15 +1,14 @@
-// HomePage.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Card = ({ title, description, link }) => {
     return (
         <Link to={link} className="w-full sm:w-1/2 md:w-1/3 p-4">
             <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105">
-                <img 
-                    src="/AIESEC-Human-Blue.png" 
-                    alt={`${title} Logo`} 
-                    className="w-full h-32 object-contain p-4" 
+                <img
+                    src="/AIESEC-Human-Blue.png"
+                    alt={`${title} Logo`}
+                    className="w-full h-32 object-contain p-4"
                 />
                 <div className="p-6">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h2>
@@ -21,6 +20,23 @@ const Card = ({ title, description, link }) => {
 };
 
 const HomePage = () => {
+    useEffect(() => {
+        // Check for 'Authentication' parameter in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('Authentication')) {
+            // Get the value of the 'Authentication' parameter
+            const authValue = urlParams.get('Authentication');
+
+            // Save the value in local storage
+            localStorage.setItem('Authentication', authValue);
+            console.log('Authentication value saved:', authValue);
+        } else {
+            // Redirect to another site if the parameter is missing
+            const redirectURL = 'https://localhost:3000'; // Replace with the desired redirect URL
+            window.location.href = redirectURL;
+        }
+    }, []);
+
     return (
         <div className="container mx-auto p-6">
             <div className="flex flex-wrap justify-center gap-6">

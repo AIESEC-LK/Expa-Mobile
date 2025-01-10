@@ -63,8 +63,17 @@ query MyPeopleIndexQuery($managers: Boolean!) {
         fetchApplications();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (loading) return (<div className="flex justify-center items-center mt-10">
+        <div className="spinner"></div>
+        {/* Show the spinner while loading */}
+    </div>);
+    if (error) {
+        return (
+            <div className="error-container">
+                <img src="/Error.jpg" alt="Error Image" className="error-image" />
+            </div>
+        );
+    }
 
     return (
         <div className="container mx-auto p-6">
@@ -72,10 +81,10 @@ query MyPeopleIndexQuery($managers: Boolean!) {
                 {applications.length > 0 ? (
                     applications.map((app) => (
                         console.log(app.contact_detail?.email),
-                        <OGXApplicationCard
-                            id={app.id}
-                            fullname={app.full_name}
-                            phoneNumber={app.contact_detail?.phone === null ? "Not provided" : `${app.contact_detail?.country_code} ${app.contact_detail?.phone}`}
+                            <OGXApplicationCard
+                                id={app.id}
+                                fullname={app.full_name}
+                                phoneNumber={app.contact_detail?.phone === null ? "Not provided" : `${app.contact_detail?.country_code} ${app.contact_detail?.phone}`}
                             email={app.contact_detail?.email === null ? "Not provided" : app.contact_detail?.email}
                             isAiesecer={app.is_aiesecer}
                             assignedManagers={app.managers}

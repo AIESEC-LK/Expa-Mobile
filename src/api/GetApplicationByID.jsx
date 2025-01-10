@@ -18,6 +18,7 @@ export const GET_APPLICATION_QUERY = `
         end_date
         start_date
       }
+      status
     }
   }
 `;

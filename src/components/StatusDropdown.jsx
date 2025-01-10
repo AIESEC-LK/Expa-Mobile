@@ -46,8 +46,8 @@ const StatusDropdown = ({ initialStatus, onChangeStatus }) => {
                 <ul
                     className="absolute top-full left-0 bg-white border rounded-md shadow-md mt-1 w-full"
                     style={{
-                        zIndex: 10, // Lower z-index to ensure dropdown remains within container
-                        overflow: "hidden", // Prevent dropdown from expanding beyond boundaries
+                        zIndex: 10,
+                        overflow: "hidden",
                     }}
                 >
                     {statusOptions[initialStatusCapitalized].map((option) => (

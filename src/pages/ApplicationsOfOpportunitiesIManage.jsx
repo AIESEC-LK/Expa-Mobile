@@ -93,7 +93,10 @@ const ApplicationsofOpportunitiesIManage = () => {
                             fill="currentFill"
                         />
                     </svg>
-                    <span className="sr-only">Loading...</span>
+                    <div className="flex justify-center items-center mt-10">
+                        <div className="spinner"></div>
+                        {/* Show the spinner while loading */}
+                    </div>
                 </div>
             ) : error ? (
                 <p className="text-red-500">{error}</p>

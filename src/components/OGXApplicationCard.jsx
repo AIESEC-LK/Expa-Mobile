@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import OGXApplications from "./OGXApplications.jsx";
 import {fetchManagerSearch} from "../api/fetchManagerSearch.jsx";
 import {updatePersonMutation} from "../api/UpdatePerson.jsx";
+import StatusDropdown from "./StatusDropdown.jsx";
 
 const OGXApplicationCard = ({id, fullname, phoneNumber = "Not provided", email = "Not provided", isAiesecer, assignedManagers, cvUrl = "Not provided"}) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -9,6 +10,7 @@ const OGXApplicationCard = ({id, fullname, phoneNumber = "Not provided", email =
   const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [managerResults, setManagerResults] = useState([]);
+
 
   useEffect(() => {
     const searchManagers = async () => {
@@ -43,33 +45,6 @@ const OGXApplicationCard = ({id, fullname, phoneNumber = "Not provided", email =
     } catch (error) {
       console.error('Error updating manager:', error);
     }
-  };
-
-  const epData = {
-    id: "5565703",
-    name: "Amaya Amarasinghe",
-    email: "p.cf1f5a...@aiesec.org",
-    phone: "+94 72 274 5734",
-    aiesecer: true,
-    managers: ["B", "B"],
-    applications: [
-      {
-        projectName: "Global Classroom - India",
-        applicationId: "12579300",
-        projectLC: "AISEC in USJ",
-        opportunityId: "5746653",
-        slotStartDate: "31st January 2025",
-        slotEndDate: "2nd March 2025",
-      },
-      {
-        projectName: "Rooted - Taiwan",
-        applicationId: "12579302",
-        projectLC: "AISEC in NUS",
-        opportunityId: "38473932",
-        slotStartDate: "31st January 2025",
-        slotEndDate: "2nd March 2025",
-      },
-    ],
   };
 
   const handleViewApplications = () => {
@@ -140,7 +115,10 @@ const OGXApplicationCard = ({id, fullname, phoneNumber = "Not provided", email =
                         className="px-3 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     {loading ? (
-                        <p className="text-gray-500 mt-2">Loading...</p>
+                        <div className="flex justify-center items-center mt-10">
+                          <div className="spinner"></div>
+                          {/* Show the spinner while loading */}
+                        </div>
                     ) : (
                         <ul className="mt-2 text-sm text-gray-600">
                           {managerResults.length > 0 ? (
