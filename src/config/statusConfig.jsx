@@ -26,7 +26,7 @@ export const statusOptions = {
         { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
         { label: 'WITHDRAWN', color: 'bg-status-reject-light text-status-reject' } //only for OGX flow
     ],
-    'ACCEPTED_BY_HOST': [
+    'MATCHED': [
         { label: 'ACCEPTED', color: 'bg-status-approvedByHost-light text-status-approvedByHost' }, //OGX flow does not have this status
         { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
         { label: 'WITHDRAWN', color: 'bg-status-reject-light text-status-reject' } //Only for OGX flow
