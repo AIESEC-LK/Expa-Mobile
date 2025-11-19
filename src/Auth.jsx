@@ -1,69 +1,42 @@
-import React from "react";
+import React from 'react'
+import { useAuth } from './AuthProvider'
 
 function Auth() {
-    const expaLogin = async () => {
-        try {
-            const response = await fetch("/api", {
-                method: "GET",
-                headers: {
-                    "X-Callback-Url": "http://localhost:3001",
-                    "X-Requested-With": "fetch",
-                },
-            });
+  const { authenticated, profile, login, logout, refresh } = useAuth()
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.redirectUrl) {
-                    window.location.href = data.redirectUrl; // Redirect the user explicitly
-                }
-            } else {
-                console.error(`HTTP error! Status: ${response.status}`);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-    const refreshToken = async () => {
-        try {
-            const response = await fetch("/api", {
-                method: "GET",
-                headers: {
-                    "X-Callback-Url": "http://localhost:3001",
-                    "Refresh-Token": "YvHtZoVavKwM1Du7_vJFd5bo0Vlb98aGSE1zN_oqE6Q",
-                    "X-Requested-With": "fetch",
-                },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.redirectUrl) {
-                    window.location.href = data.redirectUrl; // Redirect the user explicitly
-                }
-            } else {
-                console.error(`HTTP error! Status: ${response.status}`);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-    return (
-        <div>
-            <button
-                onClick={expaLogin}
-                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none"
-            >
-                Expa Login
-            </button>
-            <button
-                onClick={refreshToken}
-                className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none ml-4"
-            >
-                Refresh Token
-            </button>
+  return (
+    <div>
+      {authenticated ? (
+        <div className="flex items-center space-x-4">
+          <div>
+            <div className="font-medium">Signed in as:</div>
+            <div className="text-sm">{profile?.preferred_username || profile?.email || 'Unknown'}</div>
+          </div>
+          <button
+            onClick={refresh}
+            className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none"
+          >
+            Refresh Token
+          </button>
+          <button
+            onClick={logout}
+            className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none"
+          >
+            Logout
+          </button>
         </div>
-    );
+      ) : (
+        <div>
+          <button
+            onClick={login}
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none"
+          >
+            Login with Keycloak
+          </button>
+        </div>
+      )}
+    </div>
+  )
 }
 
-export default Auth;
+export default Auth

@@ -1,7 +1,4 @@
-// src/api/graphql.js
-
-const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = localStorage.getItem("aiesec_token");
+import { fetchGraphQL } from './graphql';
 
 export const APPLICATION_QUERY = `
   query ApplicationIndexQuery($page: Int, $perPage: Int, $filters: ApplicationFilter, $sort: String, $q: String, $applicant_name: Boolean!, $opportunity: Boolean!, $status: Boolean!, $slot: Boolean!, $home_mc: Boolean!, $home_lc: Boolean!, $phone_number: Boolean!) {
@@ -68,29 +65,12 @@ export const APPLICATION_QUERY = `
 }
 `;
 
+/**
+ * Fetch applications using the shared GraphQL helper.
+ * Returns the `allOpportunityApplication` payload (or null if not present).
+ * @param {Object} variables - Variables for the APPLICATION_QUERY
+ */
 export const fetchApplications = async (variables) => {
-    try {
-        const response = await fetch(GRAPHQL_API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": AUTH_TOKEN,
-            },
-            body: JSON.stringify({
-                query: APPLICATION_QUERY,
-                variables,
-            }),
-        });
-
-        const data = await response.json();
-        if (data.errors) {
-            console.error("GraphQL errors:", data.errors);
-            throw new Error("Failed to fetch applications");
-        }
-
-        return data.data.allOpportunityApplication;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error;
-    }
+  const data = await fetchGraphQL(APPLICATION_QUERY, variables);
+  return data?.allOpportunityApplication ?? null;
 };

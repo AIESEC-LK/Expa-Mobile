@@ -8,6 +8,7 @@ const ApplicationCard = React.memo(({
                                         fullName,
                                         home_mc,
                                         home_lc,
+                                        countryCode,
                                         phoneNumber,
                                         opportunityTitle,
                                         status,
@@ -45,7 +46,7 @@ const ApplicationCard = React.memo(({
 
 
     return (
-        <div className="w-full p-4 bg-white rounded-lg shadow-md border mb-4">
+        <div className="w-full p-4 bg-white rounded-lg shadow-md border mb-2">
             <div className="flex justify-between items-center mb-3">
                 <div>
                     <h2 className="text-lg font-semibold text-blue-600">{fullName}</h2>
@@ -74,7 +75,7 @@ const ApplicationCard = React.memo(({
             <div className="flex justify-between items-center">
                 {phoneNumber ? (
                     <a href={`tel:${phoneNumber}`} className="text-blue-600 text-sm">
-                        +{phoneNumber}
+                        {countryCode} {phoneNumber}
                     </a>
                 ) : (
                     <span className="text-red-600 text-sm">No phone</span>

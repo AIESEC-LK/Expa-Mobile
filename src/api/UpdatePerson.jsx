@@ -1,7 +1,5 @@
 // src/api/graphql.js
-
-const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = localStorage.getItem("aiesec_token");
+import { fetchGraphQL } from './graphql';
 
 // The GraphQL mutation for updating a person
 export const UPDATE_PERSON_MUTATION = `
@@ -39,30 +37,13 @@ export const UPDATE_PERSON_MUTATION = `
 // Function to update person details with the manager assignment
 export const updatePersonMutation = async (id, managerIds) => {
     try {
-        const response = await fetch(GRAPHQL_API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": AUTH_TOKEN,
-            },
-            body: JSON.stringify({
-                query: UPDATE_PERSON_MUTATION,
-                variables: {
-                    id,
-                    person: {
-                        manager_ids: managerIds,
-                    },
-                },
-            }),
+        // Use shared fetchGraphQL to execute the mutation
+        const data = await fetchGraphQL(UPDATE_PERSON_MUTATION, {
+            id,
+            person: { manager_ids: managerIds },
         });
 
-        const data = await response.json();
-        if (data.errors) {
-            console.error("GraphQL errors:", data.errors);
-            throw new Error("Failed to update person");
-        }
-
-        return data.data.updatePerson;
+        return data?.updatePerson ?? null;
     } catch (error) {
         console.error("Error updating person:", error);
         throw error;

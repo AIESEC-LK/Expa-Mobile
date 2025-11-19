@@ -1,7 +1,4 @@
-// src/api/graphql.js
-
-const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = localStorage.getItem("aiesec_token");
+import { fetchGraphQL } from './graphql';
 
 // Define GraphQL mutations for different status changes
 
@@ -29,33 +26,6 @@ const REJECT_APPLICATION_MUTATION = `
     }
   }
 `;
-
-const sendGraphQLRequest = async (mutation, variables) => {
-  try {
-    const response = await fetch(GRAPHQL_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: AUTH_TOKEN,
-      },
-      body: JSON.stringify({
-        query: mutation,
-        variables: variables,
-      }),
-    });
-
-    const data = await response.json();
-    if (data.errors) {
-      console.error("GraphQL errors:", data.errors);
-      throw new Error("Failed to execute GraphQL mutation");
-    }
-
-    return data.data;
-  } catch (error) {
-    console.error("Error in GraphQL request:", error);
-    throw error;
-  }
-};
 
 // Main function to change the status of the application
 export const changeStatusOfApplication = async (id, newStatus, ...args) => {
@@ -88,8 +58,8 @@ export const changeStatusOfApplication = async (id, newStatus, ...args) => {
 
   try {
     // send request with the selected mutation and variables
-    const result = await sendGraphQLRequest(mutation, variables);
-    console.log("Status updated:", result);
+    const result = await fetchGraphQL(mutation, variables);
+    console.log('Status updated:', result);
   } catch (error) {
     console.error("Error updating status:", error);
   }

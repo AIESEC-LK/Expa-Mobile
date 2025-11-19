@@ -1,5 +1,4 @@
-const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = localStorage.getItem("aiesec_token");
+import { fetchGraphQL } from './graphql';
 
 export const PERSON_APPLICATIONS_QUERY = `
   query ActiveApplicationsQuery($id: ID!) {
@@ -26,41 +25,24 @@ export const PERSON_APPLICATIONS_QUERY = `
 `;
 
 export const fetchPersonApplicationsFromEPid = async (id) => {
-    try {
-        const response = await fetch(GRAPHQL_API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": AUTH_TOKEN,
+     try {
+        const data = await fetchGraphQL(PERSON_APPLICATIONS_QUERY, {
+            id,
+            filters: {
+                statuses: [
+                    "approved",
+                    "open",
+                    "accepted",
+                    "matched",
+                    "approved_tn_manager",
+                    "approved_ep_manager",
+                ],
             },
-            body: JSON.stringify({
-                query: PERSON_APPLICATIONS_QUERY,
-                variables: {
-                    id,
-                    filters: {
-                        statuses: [
-                            "approved",
-                            "open",
-                            "accepted",
-                            "matched",
-                            "approved_tn_manager",
-                            "approved_ep_manager"
-                        ]
-                    },
-                }
-            }),
         });
 
-        const data = await response.json();
-
-        if (data.errors) {
-            console.error("GraphQL errors:", data.errors);
-            throw new Error("Failed to fetch person applications");
-        }
-
-        return data.data.personApplications.data;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error;
-    }
-};
+        return data?.personApplications?.data ?? [];
+     } catch (error) {
+         console.error("Error fetching data:", error);
+         throw error;
+     }
+ };

@@ -1,5 +1,4 @@
-const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = localStorage.getItem("aiesec_token");
+import { fetchGraphQL } from './graphql';
 
 export const GET_APPLICATION_QUERY = `
   query GetApplication($id: ID!) {
@@ -24,28 +23,11 @@ export const GET_APPLICATION_QUERY = `
 `;
 
 export const fetchApplicationByApplicationID = async (applicationId) => {
-    try {
-        const response = await fetch(GRAPHQL_API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": AUTH_TOKEN,
-            },
-            body: JSON.stringify({
-                query: GET_APPLICATION_QUERY,
-                variables: { id: applicationId },
-            }),
-        });
-
-        const data = await response.json();
-        if (data.errors) {
-            console.error("GraphQL errors:", data.errors);
-            throw new Error("Failed to fetch application data");
-        }
-
-        return data.data.getApplication;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error;
-    }
-};
+     try {
+        const data = await fetchGraphQL(GET_APPLICATION_QUERY, { id: applicationId });
+        return data?.getApplication ?? null;
+     } catch (error) {
+         console.error("Error fetching data:", error);
+         throw error;
+     }
+ };

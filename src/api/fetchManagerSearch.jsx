@@ -1,7 +1,4 @@
-// src/api/graphql.js
-
-const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-const AUTH_TOKEN = localStorage.getItem("aiesec_token");
+import { fetchGraphQL } from './graphql';
 
 export const MANAGER_SEARCH_QUERY = `
   query AutoCompleteDropdownQuery($q: String) {
@@ -16,25 +13,8 @@ export const MANAGER_SEARCH_QUERY = `
 
 export const fetchManagerSearch = async (q) => {
     try {
-        const response = await fetch(GRAPHQL_API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": AUTH_TOKEN,
-            },
-            body: JSON.stringify({
-                query: MANAGER_SEARCH_QUERY,
-                variables: { q },
-            }),
-        });
-
-        const data = await response.json();
-        if (data.errors) {
-            console.error("GraphQL errors:", data.errors);
-            throw new Error("Failed to fetch manager search results");
-        }
-
-        return data.data.peopleAutocompleteColleagues;
+        const data = await fetchGraphQL(MANAGER_SEARCH_QUERY, { q });
+        return data?.peopleAutocompleteColleagues ?? [];
     } catch (error) {
         console.error("Error fetching data:", error);
         throw error;

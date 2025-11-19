@@ -1,3 +1,5 @@
+import { fetchGraphQL } from './graphql';
+
 // Function to fetch the CV URL for a given application ID
 export async function fetchApplicationCV(id) {
     const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
@@ -18,22 +20,9 @@ export async function fetchApplicationCV(id) {
     };
 
     try {
-        const response = await fetch(GRAPHQL_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": AUTH_TOKEN,
-            },
-            body: JSON.stringify({
-                query,
-                variables,
-            }),
-        });
-
-        const result = await response.json();
-
+        const data = await fetchGraphQL(query, variables);
         // Return the CV URL if available
-        return result.data.getApplication.person.cv_url;
+        return data?.getApplication?.person?.cv_url ?? null;
     } catch (error) {
         console.error("Failed to fetch CV URL", error);
         return null;
