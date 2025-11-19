@@ -30,11 +30,11 @@ const ApplicationCard = React.memo(({
         if (selectedReason) {
             const rejectionData = {
                 indexId: id,
-                reasonId: parseInt(rejectionReasons[selectedReason].id, 10),
+                rejection_reason_id: parseInt(rejectionReasons[selectedReason].id, 10),
                 reasonLabel: rejectionReasons[selectedReason].reason,
             };
             setRejectReason(rejectionData.reasonLabel);
-            changeStatusOfApplication(rejectionData.indexId, "REJECTED", rejectionData.reasonId);
+            changeStatusOfApplication(rejectionData.indexId, "REJECTED", rejectionData.rejection_reason_id);
         }
     };
 

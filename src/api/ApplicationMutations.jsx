@@ -19,12 +19,29 @@ const APPROVE_APPLICATION_MUTATION = `
 `;
 
 const REJECT_APPLICATION_MUTATION = `
-  mutation RejectApplicationMutation($id: ID!, $reasonId: ID!) {
-    rejectApplication(id: $id, rejection_reason_id: $reasonId) {
-      id
-      rejection_reason_id
+  mutation RejectApplicationMutation($id: ID!, $rejection_reason_id: Int) {
+  rejectApplication(id: $id, rejection_reason_id: $rejection_reason_id) {
+    id
+    permissions {
+      can_be_rejected
+      can_be_matched
+      can_be_approved_ep
+      can_be_approved_tn
+      can_be_realized
+      can_be_approval_broken
+      can_be_realize_broken
+      __typename
     }
+    status
+    rejection_reason {
+      id
+      name
+      type_id
+      __typename
+    }
+    __typename
   }
+}
 `;
 
 // Main function to change the status of the application
@@ -36,8 +53,8 @@ export const changeStatusOfApplication = async (id, newStatus, ...args) => {
   let variables = { id };
 
   if (args.length > 0) {
-    variables.reasonId = args[0];
-    console.log("Additional argument (reasonId):", args[0]);
+    variables.rejection_reason_id = args[0];
+    console.log("Additional argument (rejection_reason_id):", args[0]);
   }
 
   switch (newStatus) {
