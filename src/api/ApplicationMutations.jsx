@@ -6,6 +6,18 @@ const MATCH_APPLICATION_MUTATION = `
   mutation MatchApplicationMutation($id: ID!) {
     matchApplication(id: $id) {
       id
+      permissions {
+        can_be_rejected
+        can_be_matched
+        can_be_approved_ep
+        can_be_approved_tn
+        can_be_realized
+        can_be_approval_broken
+        can_be_realize_broken
+        __typename
+      }
+      status
+      __typename
     }
   }
 `;
@@ -14,34 +26,46 @@ const APPROVE_APPLICATION_MUTATION = `
   mutation ApproveApplicationMutation($id: ID!) {
     approveApplication(id: $id) {
       id
+      permissions {
+        can_be_rejected
+        can_be_matched
+        can_be_approved_ep
+        can_be_approved_tn
+        can_be_realized
+        can_be_approval_broken
+        can_be_realize_broken
+        __typename
+      }
+      status
+      __typename
     }
   }
 `;
 
 const REJECT_APPLICATION_MUTATION = `
   mutation RejectApplicationMutation($id: ID!, $rejection_reason_id: Int) {
-  rejectApplication(id: $id, rejection_reason_id: $rejection_reason_id) {
-    id
-    permissions {
-      can_be_rejected
-      can_be_matched
-      can_be_approved_ep
-      can_be_approved_tn
-      can_be_realized
-      can_be_approval_broken
-      can_be_realize_broken
-      __typename
-    }
-    status
-    rejection_reason {
+    rejectApplication(id: $id, rejection_reason_id: $rejection_reason_id) {
       id
-      name
-      type_id
+      permissions {
+        can_be_rejected
+        can_be_matched
+        can_be_approved_ep
+        can_be_approved_tn
+        can_be_realized
+        can_be_approval_broken
+        can_be_realize_broken
+        __typename
+      }
+      status
+      rejection_reason {
+        id
+        name
+        type_id
+        __typename
+      }
       __typename
     }
-    __typename
   }
-}
 `;
 
 // Main function to change the status of the application

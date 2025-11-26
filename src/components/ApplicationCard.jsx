@@ -61,6 +61,7 @@ const ApplicationCard = React.memo(({
                             handleStatusChange(id, newStatus);
                         }
                     }}
+                    flow={"ICX"}
                 />
             </div>
             <p className="text-sm text-gray-500 italic mb-3">Opportunity - {opportunityTitle}</p>

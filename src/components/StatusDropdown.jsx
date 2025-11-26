@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { statusStyles, statusOptions } from "./../config/statusConfig.jsx";
 
-const StatusDropdown = ({ initialStatus, onChangeStatus }) => {
+const StatusDropdown = ({ initialStatus, onChangeStatus, flow }) => {
     const capitalizeStatus = (status) => status.toUpperCase();
     const initialStatusCapitalized = capitalizeStatus(initialStatus);
     const [status, setStatus] = useState(initialStatusCapitalized);
@@ -50,18 +50,20 @@ const StatusDropdown = ({ initialStatus, onChangeStatus }) => {
                         overflow: "hidden",
                     }}
                 >
-                    {statusOptions[initialStatusCapitalized].map((option) => (
-                        <li
-                            key={option.label}
-                            className={`px-3 py-1 cursor-pointer hover:bg-gray-200 ${option.color}`}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleStatusChange(option.label);
-                            }}
-                        >
-                            {option.label}
-                        </li>
-                    ))}
+                    {statusOptions[initialStatusCapitalized]
+                                    .filter((option) => option.flows.includes(flow))
+                                    .map((option) => (
+                                        <li
+                                            key={option.label}
+                                            className={`px-3 py-1 cursor-pointer hover:bg-gray-200 ${option.color}`}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleStatusChange(option.label);
+                                            }}
+                                        >
+                                            {option.label}
+                                        </li>
+                                    ))}
                 </ul>
             )}
         </div>
