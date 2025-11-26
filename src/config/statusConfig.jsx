@@ -22,7 +22,7 @@ export const statusStyles = {
 
 export const statusOptions = {
     'OPEN': [
-        { label: 'ACCEPTED_BY_HOST', flows: ['OGX', 'ICX'], color: 'bg-status-accept-light text-status-accept' },
+        { label: 'ACCEPTED', flows: ['OGX', 'ICX'], color: 'bg-status-accept-light text-status-accept' },
         { label: 'REJECTED', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
         { label: 'WITHDRAWN', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //only for OGX flow
     ],
