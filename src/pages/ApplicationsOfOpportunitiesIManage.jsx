@@ -233,7 +233,10 @@ const ApplicationsofOpportunitiesIManage = () => {
                                         countryCode={app.person.contact_detail ? app.person.contact_detail.country_code : "No_Code"}
                                         phoneNumber={app.person.contact_detail ? app.person.contact_detail.phone : "No_Phone"}
                                         opportunityTitle={app.opportunity.title}
-                                        status={app.status in statusLabels ? statusLabels[app.status] : app.status}
+                                        status={(() => {
+                                            const key = app.status ? String(app.status).toUpperCase() : app.status;
+                                            return statusLabels[key] || key;
+                                        })()}
                                         slot={app.slot.title}
                                         home_mc={app.person.home_mc.name}
                                         home_lc={app.person.home_lc.name}
