@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import StatusDropdown from "./StatusDropdown.jsx";
 import {rejectionReasons} from "../config/statusConfig.jsx";
-import {changeStatusOfApplication} from "../api/ApplicationMutations.jsx";
 
 const ApplicationCard = React.memo(({
                                         id,
@@ -34,14 +33,18 @@ const ApplicationCard = React.memo(({
                 reasonLabel: rejectionReasons[selectedReason].reason,
             };
             setRejectReason(rejectionData.reasonLabel);
-            changeStatusOfApplication(rejectionData.indexId, "REJECTED", rejectionData.rejection_reason_id);
+            // Use parent's handler so the parent can run the mutation and re-fetch the query
+            if (typeof handleStatusChange === 'function') {
+                handleStatusChange(rejectionData.indexId, "REJECT", rejectionData.rejection_reason_id);
+            }
         }
     };
 
 
     const handleConfirmClick = () => {
-        closeModal();
+        // Trigger mutation via parent, then close modal
         confirmRejectReason();
+        closeModal();
     };
 
 
@@ -55,9 +58,11 @@ const ApplicationCard = React.memo(({
                 <StatusDropdown
                     initialStatus={status}
                     onChangeStatus={(newStatus) => {
+                        console.log('status', newStatus);
                         if (newStatus === "REJECTED") {
                             openModal();
                         } else {
+                            console.log("Changing status to:", newStatus);
                             handleStatusChange(id, newStatus);
                         }
                     }}

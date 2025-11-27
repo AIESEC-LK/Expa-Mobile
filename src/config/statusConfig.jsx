@@ -22,27 +22,27 @@ export const statusStyles = {
 
 export const statusOptions = {
     'OPEN': [
-        { label: 'ACCEPTED', flows: ['OGX', 'ICX'], color: 'bg-status-accept-light text-status-accept' },
-        { label: 'REJECTED', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
-        { label: 'WITHDRAWN', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //only for OGX flow
+        { label: 'ACCEPT', flows: ['OGX', 'ICX'], color: 'bg-status-accept-light text-status-accept' },
+        { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
+        { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //only for OGX flow
     ],
     'MATCHED': [
-        { label: 'ACCEPTED', flows: ['ICX'], color: 'bg-status-approvedByHost-light text-status-approvedByHost' }, //OGX flow does not have this status
-        { label: 'REJECTED', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
-        { label: 'WITHDRAWN', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //Only for OGX flow
+        // { label: 'ACCEPTED', flows: ['ICX'], color: 'bg-status-approvedByHost-light text-status-approvedByHost' }, //only for ICX flow //TODO: Need to confirm if this status exists
+        { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
+        { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //Only for OGX flow
     ],
     'APPROVED_BY_HOME': [
         { label: 'APPROVED BY HOST', flows: ['OGX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome' }, //ICX flow does not have this status
-        { label: 'REJECTED', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' } //only for ICX flow
+        { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' } //only for ICX flow
     ],
     'APPROVED': [
-        { label: 'REALIZED', flows: ['ICX'], color: 'bg-status-realized-light text-status-realized' }, //only for ICX flow //Need to check if can be realized // need to show the error
+        { label: 'REALIZE', flows: ['ICX'], color: 'bg-status-realized-light text-status-realized' }, //only for ICX flow //Need to check if can be realized // need to show the error
     ],
     'REALIZED': [
-        { label: 'FINISHED', flows: ['ICX'], color: 'bg-status-finished-light text-status-finished' } //only for ICX flow
+        { label: 'FINISH', flows: ['ICX'], color: 'bg-status-finished-light text-status-finished' } //only for ICX flow
     ],
     'REJECTED': [
-        { label: 'OPEN', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' } //only for ICX flow
+        { label: 'UNREJECT', flows: ['ICX'], color: 'bg-status-open-light text-status-open' } //only for ICX flow
     ],
     'WITHDRAWN': [
         { label: 'OPEN', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //only for OGX flow
@@ -63,8 +63,8 @@ export const statusOptions = {
     'REMOTE_REALIZATION_BROKEN': [
     ],
     'ACCEPTED': [
-        { label: 'WITHDRAWN', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
-        { label: 'APPROVED BY HOME', flows: ['ICX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome' }, //OGX flow does not have this status
+        { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
+        { label: 'APPROVED AS HOST', flows: ['ICX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome' }, //OGX flow does not have this status
     ],
 };
 

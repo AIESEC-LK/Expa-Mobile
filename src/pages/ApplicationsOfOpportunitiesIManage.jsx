@@ -4,6 +4,7 @@ import PaginationControls from "../components/PaginationControls";
 import { fetchApplications } from "../api/ApplicationIndexQuery_GetTheAllTheApplicationsManageByUser";
 import applicationFetchConfig from "../config/defaultOpportunityApplication.jsx";
 import { fetchApplicationCV } from "../api/DownloadCV.jsx";
+import { changeStatusOfApplication } from "../api/ApplicationMutations.jsx"; // added import
 
 const ApplicationsofOpportunitiesIManage = () => {
     const [applications, setApplications] = useState([]);
@@ -70,6 +71,27 @@ const ApplicationsofOpportunitiesIManage = () => {
                 ? prevStatuses.filter((s) => s !== status)
                 : [...prevStatuses, status]
         );
+    };
+
+    // New: handler to change an individual application's status (passed to ApplicationCard)
+    // Accepts optional rejection_reason_id as a third parameter
+    const handleApplicationStatusChange = async (applicationId, newStatus, rejection_reason_id = null) => {
+        try {
+            setLoading(true);
+            if (rejection_reason_id) {
+                await changeStatusOfApplication(applicationId, newStatus, rejection_reason_id);
+            } else {
+                await changeStatusOfApplication(applicationId, newStatus);
+            }
+            // Refresh the list to reflect the updated status
+            await fetchData(currentPage);
+        } catch (err) {
+            console.error('Failed to change application status', err);
+            // Optionally set an error message for the UI
+            setError('Failed to change application status.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleDownload = async (applicationId) => {
@@ -216,6 +238,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                                         home_lc={app.person.home_lc.name}
                                         handleDownload={() => handleDownload(app.id)}
                                         id={app.id}
+                                        handleStatusChange={handleApplicationStatusChange} // pass handler to card
                                     />
                                 ))}
                             </div>

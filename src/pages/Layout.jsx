@@ -1,6 +1,7 @@
 import {Outlet} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import {Footer} from "../components/Footer.jsx";
+import PWAUpdatePrompt from "../components/PWAUpdatePrompt.jsx";
 
 
 export const Layout = () => {
@@ -13,6 +14,7 @@ export const Layout = () => {
                 </div>
             </div>
             <Footer></Footer>
+            <PWAUpdatePrompt />
         </div>
     )
 }

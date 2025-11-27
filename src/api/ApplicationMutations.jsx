@@ -68,6 +68,28 @@ const REJECT_APPLICATION_MUTATION = `
   }
 `;
 
+const UNREJECT_APPLICATION_MUTATION = `
+  mutation UnrejectApplicationMutation($id: ID!) {
+    UnrejectApplicationMutation(id: $id) {
+      id
+      permissions {
+        can_be_rejected
+        can_be_reopened
+        can_be_matched
+        can_be_approved_ep
+        can_be_approved_tn
+        can_be_realized
+        can_be_approval_broken
+        can_be_realize_broken
+        can_be_unrejected
+        __typename
+      }
+      status
+      __typename
+    }
+  }
+`;
+
 // Main function to change the status of the application
 export const changeStatusOfApplication = async (id, newStatus, ...args) => {
   console.log("Changing status for application ID:", id);
@@ -82,16 +104,19 @@ export const changeStatusOfApplication = async (id, newStatus, ...args) => {
   }
 
   switch (newStatus) {
-    case "ACCEPTED":
+    case "ACCEPT":
       mutation = MATCH_APPLICATION_MUTATION;
       break;
-    case "APPROVED":
+    case "APPROVE":
       mutation = APPROVE_APPLICATION_MUTATION;
       break;
-    case "REJECTED":
+    case "REJECT":
       mutation = REJECT_APPLICATION_MUTATION;
       break;
-    // Add more cases as necessary
+    case "UNREJECT":
+      mutation = UNREJECT_APPLICATION_MUTATION;
+      console.log("Preparing to unreject application with ID:", id);
+      break;
     default:
       console.log(`Unknown status: ${newStatus}`);
       return;

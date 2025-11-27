@@ -4,8 +4,12 @@ import './index.css'
 import App from './App.jsx'
 import AuthProvider from './AuthProvider'
 import initKeycloak from './keycloak'
+import { registerPWA } from './pwaRegister'
 
 const root = createRoot(document.getElementById('root'))
+
+// Register PWA service worker
+registerPWA()
 
 // Initialize Keycloak before rendering the app
 initKeycloak()
