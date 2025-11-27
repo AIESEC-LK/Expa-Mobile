@@ -4,7 +4,8 @@ import PaginationControls from "../components/PaginationControls";
 import { fetchApplications } from "../api/ApplicationIndexQuery_GetTheAllTheApplicationsManageByUser";
 import applicationFetchConfig from "../config/defaultOpportunityApplication.jsx";
 import { fetchApplicationCV } from "../api/DownloadCV.jsx";
-import { changeStatusOfApplication } from "../api/ApplicationMutations.jsx"; // added import
+import { changeStatusOfApplication } from "../api/ApplicationMutations.jsx";
+import {statusLabels} from "../config/statusConfig.jsx";
 
 const ApplicationsofOpportunitiesIManage = () => {
     const [applications, setApplications] = useState([]);
@@ -232,7 +233,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                                         countryCode={app.person.contact_detail ? app.person.contact_detail.country_code : "No_Code"}
                                         phoneNumber={app.person.contact_detail ? app.person.contact_detail.phone : "No_Phone"}
                                         opportunityTitle={app.opportunity.title}
-                                        status={app.status}
+                                        status={app.status in statusLabels ? statusLabels[app.status] : app.status}
                                         slot={app.slot.title}
                                         home_mc={app.person.home_mc.name}
                                         home_lc={app.person.home_lc.name}

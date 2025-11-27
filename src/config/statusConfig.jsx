@@ -20,6 +20,10 @@ export const statusStyles = {
     'REMOTE_REALIZATION_BROKEN': 'bg-status-remoteRealizationBroken-light text-status-remoteRealizationBroken',
 };
 
+export const statusLabels = {
+    'APPROVED_TN_MANAGER': 'APPROVED_BY_HOST',
+}
+
 export const statusOptions = {
     'OPEN': [
         { label: 'ACCEPT', flows: ['OGX', 'ICX'], color: 'bg-status-accept-light text-status-accept' },
