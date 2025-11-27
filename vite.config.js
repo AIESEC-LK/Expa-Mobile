@@ -11,7 +11,7 @@ export default defineConfig({
       includeAssets: ['AIESEC-Human-Blue.png', 'White-Blue-Logo.png'],
       manifest: {
         name: 'EXPA Mobile',
-        short_name: 'EXPA',
+        short_name: 'EXPA Mobile',
         description: 'AIESEC EXPA Mobile Application - Manage applications and opportunities',
         theme_color: '#2B6CB0',
         background_color: '#FFFFFF',
