@@ -31,7 +31,7 @@ export default defineConfig({
             purpose: 'any'
           },
           {
-            src: '/White-Blue-Logo.png',
+            src: '/AIESEC-Human-Blue.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'maskable'
