@@ -29,6 +29,7 @@ function initKeycloak(onAuthenticatedCallback) {
                     promiseType: 'native',
                     // Recommended PKCE method for public clients
                     pkceMethod: 'S256',
+                    checkLoginIframe: false,
                 })
                 .then((authenticated) => {
                     // If authenticated is true, the user has a valid session.

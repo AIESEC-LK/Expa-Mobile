@@ -1,7 +1,8 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useCurrentPersonData } from "../api/CurrentPersonQuery.jsx";
 import { useEffect, useState } from "react";
+import { logout } from "../keycloak";
 
 const navigation = [
     { name: 'iCX', href: '/icx/applications/my-opportunities' },
@@ -15,6 +16,57 @@ function classNames(...classes) {
 export default function Navbar() {
     const personData = useCurrentPersonData();
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+    const handleSignOut = (e) => {
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
+        // 1. Clear local storage immediately
+        const keysToRemove = [
+            'access_token',
+            'refresh_token',
+            'aiesec_token',
+            'keycloak_token',
+            'keycloak_refresh_token',
+        ];
+        keysToRemove.forEach((k) => localStorage.removeItem(k));
+
+        // 2. Define the next step (Keycloak Logout)
+        const triggerKeycloakLogout = () => {
+            try {
+                logout(); // This usually redirects the browser
+            } catch (err) {
+                console.warn('Keycloak logout failed', err);
+                window.location.href = '/';
+            }
+        };
+
+        // 3. Attempt AIESEC Logout via Iframe with Event Listener
+        try {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+
+            // IMPORTANT: Wait for the iframe to actually load
+            iframe.onload = () => {
+                console.log("AIESEC logout iframe loaded. Proceeding to Keycloak logout.");
+                triggerKeycloakLogout();
+            };
+
+            // Point to the logout URL
+            iframe.src = 'https://auth.aiesec.org/users/sign_out';
+            document.body.appendChild(iframe);
+
+            // 4. Safety Fallback: If iframe.onload doesn't fire within 2 seconds
+            // (e.g., due to network error or cross-origin blocking), force logout anyway.
+            setTimeout(() => {
+                console.log("Logout timeout reached. Forcing Keycloak logout.");
+                triggerKeycloakLogout();
+            }, 2000);
+
+        } catch (err) {
+            console.warn('Failed to append AIESEC logout iframe', err);
+            triggerKeycloakLogout();
+        }
+    };
 
     // Update the current path on navigation
     useEffect(() => {
@@ -84,6 +136,7 @@ export default function Navbar() {
                                 <MenuItem>
                                     <a
                                         href="#"
+                                        onClick={handleSignOut}
                                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                     >
                                         Sign out
