@@ -18,9 +18,10 @@ export default function Navbar() {
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
     const handleSignOut = (e) => {
+        // 1. Prevent default link behavior
         if (e && typeof e.preventDefault === 'function') e.preventDefault();
 
-        // 1. Clear local storage immediately
+        // 2. Clear local storage immediately
         const keysToRemove = [
             'access_token',
             'refresh_token',
@@ -30,44 +31,38 @@ export default function Navbar() {
         ];
         keysToRemove.forEach((k) => localStorage.removeItem(k));
 
-        // 2. Define the next step (Keycloak Logout)
-        const triggerKeycloakLogout = () => {
+        // 3. Open AIESEC Logout in a Popup
+        // This works because popups are "top-level" windows, bypassing iframe security restrictions.
+        const width = 500;
+        const height = 600;
+        const left = window.screen.width / 2 - width / 2;
+        const top = window.screen.height / 2 - height / 2;
+
+        const popup = window.open(
+            import.meta.env.VITE_AIESEC_LOGOUT_URL,
+            'AIESEC_Logout',
+            `width=${width},height=${height},top=${top},left=${left},toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no`
+        );
+
+        // 4. Wait for the logout to process, then trigger Keycloak logout
+        // We give it 2 seconds to hit the server and destroy the session.
+        setTimeout(() => {
+            // Close the popup if it's still open
+            if (popup && !popup.closed) {
+                popup.close();
+            }
+
+            // 5. Trigger Keycloak Logout
+            // Now that the AIESEC session is dead, Keycloak will eventually
+            // redirect the user to the AIESEC login page, which will now ask for credentials.
             try {
-                logout(); // This usually redirects the browser
+                logout();
             } catch (err) {
                 console.warn('Keycloak logout failed', err);
                 window.location.href = '/';
             }
-        };
-
-        // 3. Attempt AIESEC Logout via Iframe with Event Listener
-        try {
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-
-            // IMPORTANT: Wait for the iframe to actually load
-            iframe.onload = () => {
-                console.log("AIESEC logout iframe loaded. Proceeding to Keycloak logout.");
-                triggerKeycloakLogout();
-            };
-
-            // Point to the logout URL
-            iframe.src = 'https://auth.aiesec.org/users/sign_out';
-            document.body.appendChild(iframe);
-
-            // 4. Safety Fallback: If iframe.onload doesn't fire within 2 seconds
-            // (e.g., due to network error or cross-origin blocking), force logout anyway.
-            setTimeout(() => {
-                console.log("Logout timeout reached. Forcing Keycloak logout.");
-                triggerKeycloakLogout();
-            }, 2000);
-
-        } catch (err) {
-            console.warn('Failed to append AIESEC logout iframe', err);
-            triggerKeycloakLogout();
-        }
+        }, 2000);
     };
-
     // Update the current path on navigation
     useEffect(() => {
         const handlePathChange = () => setCurrentPath(window.location.pathname);
