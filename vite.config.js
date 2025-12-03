@@ -51,14 +51,14 @@ export default defineConfig({
             name: 'My Applications',
             short_name: 'Applications',
             description: 'View and manage your applications',
-            url: '/icx/applications/my-opportunities',
+            url: '/app/icx/applications/my-opportunities',
             icons: [{ src: '/AIESEC-Human-Blue.png', sizes: '192x192' }]
           },
           {
             name: 'OGX Applications',
             short_name: 'OGX',
             description: 'View OGX applications',
-            url: '/ogx',
+            url: '/app/ogx',
             icons: [{ src: '/AIESEC-Human-Blue.png', sizes: '192x192' }]
           }
         ]

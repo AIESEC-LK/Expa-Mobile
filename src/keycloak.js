@@ -24,12 +24,10 @@ function initKeycloak(onAuthenticatedCallback) {
             // Use native promises from keycloak-js
             keycloak
                 .init({
-                    // Require interactive login when the app starts
-                    onLoad: 'login-required',
-                    promiseType: 'native',
-                    // Recommended PKCE method for public clients
-                    pkceMethod: 'S256',
-                    checkLoginIframe: false,
+                    onLoad: 'check-sso',
+                    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+                    checkLoginIframe: true,
+                    checkLoginIframeInterval: 5
                 })
                 .then((authenticated) => {
                     // If authenticated is true, the user has a valid session.

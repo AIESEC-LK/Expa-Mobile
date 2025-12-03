@@ -2,11 +2,12 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useCurrentPersonData } from "../api/CurrentPersonQuery.jsx";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../keycloak";
 
 const navigation = [
-    { name: 'iCX', href: '/icx/applications/my-opportunities' },
-    { name: 'oGX', href: '/ogx' },
+    { name: 'iCX', href: '/app/icx/applications/my-opportunities' },
+    { name: 'oGX', href: '/app/ogx' },
 ];
 
 function classNames(...classes) {
@@ -16,6 +17,7 @@ function classNames(...classes) {
 export default function Navbar() {
     const personData = useCurrentPersonData();
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
+    const navigate = useNavigate();
 
     const handleSignOut = (e) => {
         // 1. Prevent default link behavior
@@ -57,9 +59,10 @@ export default function Navbar() {
             // redirect the user to the AIESEC login page, which will now ask for credentials.
             try {
                 logout();
+                navigate('/', { replace: true });
             } catch (err) {
                 console.warn('Keycloak logout failed', err);
-                window.location.href = '/';
+                navigate('/', { replace: true });
             }
         }, 2000);
     };

@@ -27,13 +27,13 @@ const HomePage = () => {
                 <Card
                     title="iCX"
                     description="View iCX Applications of Opportunities I Manage"
-                    link="/icx/applications/my-opportunities"
+                    link="/app/icx/applications/my-opportunities"
                 />
                 {/* OGX Card */}
                 <Card
                     title="oGX"
                     description="View oGX Signups and Assign Managers"
-                    link="/ogx"
+                    link="/app/ogx"
                 />
             </div>
         </div>
