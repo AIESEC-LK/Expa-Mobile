@@ -7,7 +7,6 @@
 </head>
 <body>
     <script>
-        // Send the current URL back to the parent window
         if (window.parent !== window) {
             window.parent.postMessage(window.location.href, window.location.origin);
         }

@@ -2,7 +2,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useCurrentPersonData } from "../api/CurrentPersonQuery.jsx";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { logout } from "../keycloak";
 
 const navigation = [
@@ -53,10 +53,6 @@ export default function Navbar() {
             if (popup && !popup.closed) {
                 popup.close();
             }
-
-            // 5. Trigger Keycloak Logout
-            // Now that the AIESEC session is dead, Keycloak will eventually
-            // redirect the user to the AIESEC login page, which will now ask for credentials.
             try {
                 logout();
                 navigate('/', { replace: true });
@@ -99,16 +95,18 @@ export default function Navbar() {
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 {navigation.map((item) => (
-                                    <a
+                                    <NavLink
                                         key={item.name}
-                                        href={item.href}
-                                        className={classNames(
-                                            item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                            'rounded-md px-3 py-2 text-sm font-medium',
-                                        )}
+                                        to={item.href}
+                                        className={({ isActive }) =>
+                                            classNames(
+                                                isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                'rounded-md px-3 py-2 text-sm font-medium'
+                                            )
+                                        }
                                     >
                                         {item.name}
-                                    </a>
+                                    </NavLink>
                                 ))}
                             </div>
                         </div>
