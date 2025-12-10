@@ -73,7 +73,7 @@ export const statusOptions = {
     ],
     'ACCEPTED': [
         // { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
-        { label: 'PAID FOR APPROVE', flows: ['ICX'], color: 'bg-status-open-light text-status-open' }, //OGX flow does not have this status
+        { label: 'PAID FOR APPROVE', flows: ['OGX'], color: 'bg-status-open-light text-status-open' }, //OGX flow does not have this status
     ],
     'APPROVED_BY_HOST': [
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
