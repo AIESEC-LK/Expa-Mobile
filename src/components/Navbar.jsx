@@ -143,6 +143,24 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+
+            <DisclosurePanel className="sm:hidden">
+                <div className="space-y-1 px-2 pb-3 pt-2">
+                    {navigation.map((item) => (
+                        <DisclosureButton
+                            key={item.name}
+                            as={NavLink}
+                            to={item.href}
+                            className={classNames(
+                                item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                'block rounded-md px-3 py-2 text-base font-medium',
+                            )}
+                        >
+                            {item.name}
+                        </DisclosureButton>
+                    ))}
+                </div>
+            </DisclosurePanel>
         </Disclosure>
     );
 }
