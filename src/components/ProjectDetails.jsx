@@ -85,6 +85,7 @@ const ProjectDetails = ({ appID, opportunityId }) => {
                         handleStatusChange(id, newStatus);
                     }
                 }}
+                flow={"OGX"}
             />
             </div>
         </div>

@@ -37,7 +37,7 @@ export const statusOptions = {
         { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //Only for OGX flow
     ],
     'APPROVED_BY_HOME': [
-        { label: 'APPROVED AS HOST', flows: ['OGX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome'}, //ICX flow does not have this status
+        { label: 'APPROVED AS HOST', flows: ['OGX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome'}, //only for OGX flow
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' } //only for ICX flow
     ],
     'APPROVED': [
