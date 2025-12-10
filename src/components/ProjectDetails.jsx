@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchApplicationByApplicationID } from "../api/GetApplicationByID.jsx";
 import StatusDropdown from "./StatusDropdown.jsx";
+import {statusLabels} from "../config/statusConfig.jsx";
 
 const ProjectDetails = ({ appID, opportunityId }) => {
     const [project, setProject] = useState({});
@@ -73,7 +74,10 @@ const ProjectDetails = ({ appID, opportunityId }) => {
             </div>
             <div className="ml-3">
             <StatusDropdown
-                initialStatus={project.status}
+                initialStatus={(() => {
+                    const key = app.status ? String(app.status).toUpperCase() : app.status;
+                    return statusLabels[key] || key;
+                })()}
                 onChangeStatus={(newStatus) => {
                     if (newStatus === "REJECTED") {
                         openModal();

@@ -107,7 +107,7 @@ export const changeStatusOfApplication = async (id, newStatus, ...args) => {
     case "ACCEPT":
       mutation = MATCH_APPLICATION_MUTATION;
       break;
-    case "APPROVE":
+    case "APPROVE" || "APPROVED AS HOST" :
       mutation = APPROVE_APPLICATION_MUTATION;
       break;
     case "REJECT":

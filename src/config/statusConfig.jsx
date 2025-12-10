@@ -22,6 +22,7 @@ export const statusStyles = {
 
 export const statusLabels = {
     'APPROVED_TN_MANAGER': 'APPROVED_BY_HOST',
+    'APPROVED_ET_MANAGER': 'APPROVED_BY_HOME',
 }
 
 export const statusOptions = {
@@ -36,7 +37,7 @@ export const statusOptions = {
         { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //Only for OGX flow
     ],
     'APPROVED_BY_HOME': [
-        { label: 'APPROVED BY HOST', flows: ['OGX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome' }, //ICX flow does not have this status
+        { label: 'APPROVED AS HOST', flows: ['OGX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome'}, //ICX flow does not have this status
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' } //only for ICX flow
     ],
     'APPROVED': [
