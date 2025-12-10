@@ -22,7 +22,7 @@ export const statusStyles = {
 
 export const statusLabels = {
     'APPROVED_TN_MANAGER': 'APPROVED_BY_HOST',
-    'APPROVED_ET_MANAGER': 'APPROVED_BY_HOME',
+    'APPROVED_EP_MANAGER': 'APPROVED_BY_HOME',
 }
 
 export const statusOptions = {
