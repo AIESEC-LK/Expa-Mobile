@@ -82,7 +82,7 @@ const ProjectDetails = ({ appID, opportunityId }) => {
                     if (newStatus === "REJECTED") {
                         openModal();
                     } else {
-                        handleStatusChange(id, newStatus);
+                        handleStatusChange(appID, newStatus);
                     }
                 }}
                 flow={"OGX"}
