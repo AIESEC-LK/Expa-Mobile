@@ -18,6 +18,7 @@ export const statusStyles = {
     'REALIZATION_BROKEN': 'bg-status-realizationBroken-light text-status-realizationBroken',
     'WITHDRAWN': 'bg-status-withdrawn-light text-status-withdrawn',
     'REMOTE_REALIZATION_BROKEN': 'bg-status-remoteRealizationBroken-light text-status-remoteRealizationBroken',
+    'PAID FOR APPROVE': 'bg-status-open-light text-status-open',
 };
 
 export const statusLabels = {
@@ -42,7 +43,7 @@ export const statusOptions = {
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' } //only for ICX flow
     ],
     'APPROVED': [
-        { label: 'REALIZE', flows: ['ICX'], color: 'bg-status-realized-light text-status-realized' }, //only for ICX flow //Need to check if can be realized // need to show the error
+        // { label: 'REALIZE', flows: ['ICX'], color: 'bg-status-realized-light text-status-realized' }, //only for ICX flow //Need to check if can be realized // need to show the error
     ],
     'REALIZED': [
         // { label: 'FINISH', flows: ['ICX'], color: 'bg-status-finished-light text-status-finished' } //only for ICX flow
@@ -72,7 +73,7 @@ export const statusOptions = {
     ],
     'ACCEPTED': [
         // { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
-        // { label: 'APPROVED AS HOST', flows: ['ICX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome' }, //OGX flow does not have this status
+        { label: 'PAID FOR APPROVE', flows: ['ICX'], color: 'bg-status-open-light text-status-open' }, //OGX flow does not have this status
     ],
     'APPROVED_BY_HOST': [
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
