@@ -27,14 +27,10 @@ const ProjectDetails = ({ appID, opportunityId }) => {
         fetchData();
     }, [appID]);
 
-    const handleStatusChange = async (applicationId, newStatus, rejection_reason_id = null) => {
+    const handleStatusChange = async (applicationId, newStatus) => {
         try {
             setLoading(true);
-            if (rejection_reason_id) {
-                await changeStatusOfApplication(applicationId, newStatus, rejection_reason_id);
-            } else {
-                await changeStatusOfApplication(applicationId, newStatus);
-            }
+            await changeStatusOfApplication(applicationId, newStatus);
         } catch (err) {
             console.error('Failed to change application status', err);
         } finally {
