@@ -64,6 +64,8 @@ export const statusOptions = {
     ],
     'APPROVAL_BROKEN': [
     ],
+    'ACCEPTED BY HOST': [
+    ],
     'REALIZATION_BROKEN': [
     ],
     'REMOTE_REALIZATION_BROKEN': [
