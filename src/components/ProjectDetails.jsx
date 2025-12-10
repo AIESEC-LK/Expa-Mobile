@@ -75,7 +75,7 @@ const ProjectDetails = ({ appID, opportunityId }) => {
             <div className="ml-3">
             <StatusDropdown
                 initialStatus={(() => {
-                    const key = app.status ? String(app.status).toUpperCase() : app.status;
+                    const key = project.status ? String(project.status).toUpperCase() : project.status;
                     return statusLabels[key] || key;
                 })()}
                 onChangeStatus={(newStatus) => {
