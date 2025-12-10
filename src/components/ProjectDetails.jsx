@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchApplicationByApplicationID } from "../api/GetApplicationByID.jsx";
 import StatusDropdown from "./StatusDropdown.jsx";
 import {statusLabels} from "../config/statusConfig.jsx";
+import {changeStatusOfApplication} from "../api/ApplicationMutations.jsx";
 
 const ProjectDetails = ({ appID, opportunityId }) => {
     const [project, setProject] = useState({});
@@ -26,12 +27,19 @@ const ProjectDetails = ({ appID, opportunityId }) => {
         fetchData();
     }, [appID]);
 
-    const handleStatusChange = (status) => {
-        setStatusFilter((prevStatuses) =>
-            prevStatuses.includes(status)
-                ? prevStatuses.filter((s) => s !== status)
-                : [...prevStatuses, status]
-        );
+    const handleStatusChange = async (applicationId, newStatus, rejection_reason_id = null) => {
+        try {
+            setLoading(true);
+            if (rejection_reason_id) {
+                await changeStatusOfApplication(applicationId, newStatus, rejection_reason_id);
+            } else {
+                await changeStatusOfApplication(applicationId, newStatus);
+            }
+        } catch (err) {
+            console.error('Failed to change application status', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const openModal = () => setIsModalOpen(true);
@@ -79,6 +87,7 @@ const ProjectDetails = ({ appID, opportunityId }) => {
                     return statusLabels[key] || key;
                 })()}
                 onChangeStatus={(newStatus) => {
+                    console.log("status", appID,newStatus);
                     if (newStatus === "REJECTED") {
                         openModal();
                     } else {
