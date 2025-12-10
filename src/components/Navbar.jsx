@@ -143,32 +143,6 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
-
-            <DisclosurePanel className="sm:hidden">
-                <div className="space-y-1 px-2 pb-3 pt-2">
-                    {navigation.map((item) => (
-                        <DisclosurePanel className="sm:hidden">
-                            <div className="space-y-1 px-2 pb-3 pt-2">
-                                {navigation.map((item) => (
-                                    <DisclosureButton
-                                        key={item.name}
-                                        as={NavLink}        // Change from "a" to NavLink
-                                        to={item.href}      // Change from href to to
-                                        className={({ isActive }) =>  // Use isActive for styling consistency
-                                            classNames(
-                                                isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                'block rounded-md px-3 py-2 text-base font-medium',
-                                            )
-                                        }
-                                    >
-                                        {item.name}
-                                    </DisclosureButton>
-                                ))}
-                            </div>
-                        </DisclosurePanel>
-                    ))}
-                </div>
-            </DisclosurePanel>
         </Disclosure>
     );
 }
