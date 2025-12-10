@@ -71,8 +71,8 @@ export const statusOptions = {
     'REMOTE_REALIZATION_BROKEN': [
     ],
     'ACCEPTED': [
-        { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
-        { label: 'APPROVED AS HOST', flows: ['ICX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome' }, //OGX flow does not have this status
+        // { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
+        // { label: 'APPROVED AS HOST', flows: ['ICX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome' }, //OGX flow does not have this status
     ],
     'APPROVED_BY_HOST': [
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
