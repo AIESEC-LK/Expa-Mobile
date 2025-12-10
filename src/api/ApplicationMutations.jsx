@@ -90,6 +90,21 @@ const UNREJECT_APPLICATION_MUTATION = `
   }
 `;
 
+const MARK_MATCH_PAID_MUTATION = `
+  mutation MarkMatchPaidMutation($id: ID!) {
+    updateApplication(id: $id, opportunity_application: { paid: true }) {
+      id
+      status
+      permissions {
+        can_mark_match_paid
+        has_paid_for_match
+        __typename
+      }
+      __typename
+    }
+  }
+`;
+
 // Main function to change the status of the application
 export const changeStatusOfApplication = async (id, newStatus, ...args) => {
   console.log("Changing status for application ID:", id);
@@ -107,7 +122,10 @@ export const changeStatusOfApplication = async (id, newStatus, ...args) => {
     case "ACCEPT":
       mutation = MATCH_APPLICATION_MUTATION;
       break;
-    case "APPROVE" || "APPROVED AS HOST" :
+    case "APPROVE":
+      mutation = APPROVE_APPLICATION_MUTATION;
+      break;
+    case "APPROVED AS HOST":
       mutation = APPROVE_APPLICATION_MUTATION;
       break;
     case "REJECT":
