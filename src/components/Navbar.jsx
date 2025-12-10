@@ -147,17 +147,25 @@ export default function Navbar() {
             <DisclosurePanel className="sm:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     {navigation.map((item) => (
-                        <DisclosureButton
-                            key={item.name}
-                            as="a"
-                            href={item.href}
-                            className={classNames(
-                                item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                'block rounded-md px-3 py-2 text-base font-medium',
-                            )}
-                        >
-                            {item.name}
-                        </DisclosureButton>
+                        <DisclosurePanel className="sm:hidden">
+                            <div className="space-y-1 px-2 pb-3 pt-2">
+                                {navigation.map((item) => (
+                                    <DisclosureButton
+                                        key={item.name}
+                                        as={NavLink}        // Change from "a" to NavLink
+                                        to={item.href}      // Change from href to to
+                                        className={({ isActive }) =>  // Use isActive for styling consistency
+                                            classNames(
+                                                isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                'block rounded-md px-3 py-2 text-base font-medium',
+                                            )
+                                        }
+                                    >
+                                        {item.name}
+                                    </DisclosureButton>
+                                ))}
+                            </div>
+                        </DisclosurePanel>
                     ))}
                 </div>
             </DisclosurePanel>
