@@ -30,6 +30,14 @@ function initKeycloak(onAuthenticatedCallback) {
                     checkLoginIframeInterval: 5
                 })
                 .then((authenticated) => {
+                    // Mark that we've completed initialization so other modules can detect it
+                    try {
+                        keycloak.didInitialize = true
+                        keycloak.isAuthenticated = !!authenticated
+                    } catch (e) {
+                        // ignore
+                    }
+
                     // If authenticated is true, the user has a valid session.
                     if (authenticated) {
                         // Persist tokens for existing app flows that read localStorage
@@ -77,6 +85,7 @@ function initKeycloak(onAuthenticatedCallback) {
 
                         if (keycloak.token) localStorage.setItem('keycloak_token', keycloak.token)
                         if (keycloak.refreshToken) localStorage.setItem('keycloak_refresh_token', keycloak.refreshToken)
+                        try { keycloak.isAuthenticated = true } catch (e) {}
                         if (typeof _onAuthChange === 'function') _onAuthChange(true)
                     }
 
@@ -84,6 +93,7 @@ function initKeycloak(onAuthenticatedCallback) {
                         localStorage.removeItem('aiesec_token')
                         localStorage.removeItem('keycloak_refresh_token')
                         localStorage.removeItem('keycloak_token')
+                        try { keycloak.isAuthenticated = false } catch (e) {}
                         if (typeof _onAuthChange === 'function') _onAuthChange(false)
                     }
 
@@ -92,6 +102,7 @@ function initKeycloak(onAuthenticatedCallback) {
                         keycloak.updateToken(30).catch(() => {
                             console.error('Failed to refresh token.')
                             // If refresh fails, notify listeners so UI can react
+                            try { keycloak.isAuthenticated = false } catch (e) {}
                             if (typeof _onAuthChange === 'function') _onAuthChange(false)
                         })
                     }
@@ -123,6 +134,10 @@ function getKeycloak() {
 
 function onAuthChange(cb) {
     _onAuthChange = cb
+    // Return unsubscribe function
+    return () => {
+        if (_onAuthChange === cb) _onAuthChange = null
+    }
 }
 
 export { keycloak, getKeycloak, onAuthChange, logout }

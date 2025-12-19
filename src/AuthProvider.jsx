@@ -23,7 +23,8 @@ export function AuthProvider({ children }) {
     const kc = getKeycloak()
     if (kc && kc.didInitialize) {
       // Keycloak already initialized, just set the state
-      if (kc.token) {
+      const isAuth = kc.isAuthenticated ?? !!kc.token
+      if (isAuth) {
         setAuthenticated(true)
         setProfile(kc.tokenParsed || null)
       } else {
@@ -63,10 +64,11 @@ export function AuthProvider({ children }) {
       }
     }
 
-    onAuthChange(handleAuthChange)
+    const unsubscribe = onAuthChange(handleAuthChange)
 
     return () => {
       mounted = false
+      if (typeof unsubscribe === 'function') unsubscribe()
     }
   }, [])
 
@@ -90,6 +92,8 @@ export function AuthProvider({ children }) {
     if (!kc) return
     try {
       await kc.updateToken(30)
+      // updateToken succeeded; ensure auth state reflects that
+      setAuthenticated(true)
       setProfile(kc.tokenParsed || null)
       try {
         if (kc.tokenParsed && kc.tokenParsed.aiesec_access_token) {
@@ -118,4 +122,3 @@ export function useAuth() {
 }
 
 export default AuthProvider
-
