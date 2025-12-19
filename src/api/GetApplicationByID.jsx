@@ -7,8 +7,7 @@ export const GET_APPLICATION_QUERY = `
         url
       }
       permissions {
-        can_be_favourited
-        can_update
+        has_paid_for_match
         __typename
       }
       home_mc {
