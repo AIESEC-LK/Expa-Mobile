@@ -24,6 +24,7 @@ const ProtectedRoute = ({ children }) => {
 
 const AuthenticatedRoute = ({ children }) => {
   const { authenticated, loading } = useAuth()
+    console.log(authenticated, loading)
 
   if (loading) {
     return (

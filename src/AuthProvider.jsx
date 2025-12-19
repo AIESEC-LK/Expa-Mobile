@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import initKeycloak, { getKeycloak } from './keycloak'
+import initKeycloak, { getKeycloak, onAuthChange } from './keycloak'
 
 const AuthContext = createContext({
   authenticated: false,
@@ -50,6 +50,20 @@ export function AuthProvider({ children }) {
           if (mounted) setLoading(false)
         })
     }
+
+    // Register listener for auth state changes from Keycloak
+    const handleAuthChange = (isAuthenticated) => {
+      if (!mounted) return
+      const kc = getKeycloak()
+      setAuthenticated(isAuthenticated)
+      if (isAuthenticated && kc) {
+        setProfile(kc.tokenParsed || null)
+      } else {
+        setProfile(null)
+      }
+    }
+
+    onAuthChange(handleAuthChange)
 
     return () => {
       mounted = false
