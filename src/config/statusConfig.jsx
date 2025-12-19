@@ -78,6 +78,9 @@ export const statusOptions = {
     'APPROVED_BY_HOST': [
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
     ],
+    'PAID':[
+        { label: 'REALIZE', flows: ['OGX'], color: 'bg-status-realized-light text-status-realized' }, //only for OGX flow
+    ]
 };
 
 export const rejectionReasons = {

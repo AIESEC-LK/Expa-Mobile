@@ -6,6 +6,11 @@ export const GET_APPLICATION_QUERY = `
       cv {
         url
       }
+      permissions {
+        can_be_favourited
+        can_update
+        __typename
+      }
       home_mc {
         full_name
       }

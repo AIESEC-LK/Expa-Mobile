@@ -79,7 +79,11 @@ const ProjectDetails = ({ appID, opportunityId }) => {
             <div className="ml-3">
             <StatusDropdown
                 initialStatus={(() => {
-                    const key = project.status ? String(project.status).toUpperCase() : project.status;
+                    let key = project.status ? String(project.status).toUpperCase() : project.status;
+                    const isPaid = project.permissions.has_paid_for_match;
+                    if (isPaid && key === "ACCEPTED") {
+                        key = "PAID";
+                    }
                     return statusLabels[key] || key;
                 })()}
                 onChangeStatus={(newStatus) => {

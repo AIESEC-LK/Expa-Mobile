@@ -128,6 +128,9 @@ export const changeStatusOfApplication = async (id, newStatus, ...args) => {
     case "APPROVED AS HOST":
       mutation = APPROVE_APPLICATION_MUTATION;
       break;
+    case "PAID":
+      mutation = APPROVE_APPLICATION_MUTATION;
+      break;
     case "PAID FOR APPROVE":
       mutation = MARK_MATCH_PAID_MUTATION;
       break;
