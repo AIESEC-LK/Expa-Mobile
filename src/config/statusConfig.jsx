@@ -79,7 +79,7 @@ export const statusOptions = {
         { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
     ],
     'PAID':[
-        { label: 'REALIZE', flows: ['OGX'], color: 'bg-status-realized-light text-status-realized' }, //only for OGX flow
+        { label: 'APPROVE AS HOME', flows: ['OGX'], color: 'bg-status-realized-light text-status-realized' }, //only for OGX flow
     ]
 };
 
