@@ -22,13 +22,27 @@ const ProtectedRoute = ({ children }) => {
   return <>{authenticated ? children : <Navigate to="/" replace />}</>
 }
 
+const AuthenticatedRoute = ({ children }) => {
+  const { authenticated, loading } = useAuth()
+
+  if (loading) {
+    return (
+        <div className="flex justify-center items-center mt-10" style={{ height: 'calc(100vh - 350px)' }}>
+          <div className="spinner"></div>
+        </div>
+    )
+  }
+
+  return <>{authenticated ? children : <LandingPage />}</>
+}
+
 const App = () => {
   return (
       <div className="App">
         <Router>
           <Routes>
-            {/* Unprotected Landing Page */}
-            <Route path="/" element={<LandingPage />} />
+            {/* Landing Page - redirect to /app if authenticated */}
+            <Route path="/" element={<AuthenticatedRoute><Navigate to="/app" replace /></AuthenticatedRoute>} />
 
             {/* Protected Routes */}
             <Route path="/app" element={<ProtectedRoute><Layout /></ProtectedRoute>}>

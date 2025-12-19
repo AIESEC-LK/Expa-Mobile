@@ -1,19 +1,9 @@
 import React from 'react'
 import { useAuth } from '../AuthProvider'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import {Footer} from "../components/Footer.jsx";
 
 const LandingPage = () => {
   const { authenticated, login } = useAuth()
-  const navigate = useNavigate()
-
-  // If already authenticated, redirect to app
-  useEffect(() => {
-    if (authenticated) {
-      navigate('/app', { replace: true })
-    }
-  }, [authenticated, navigate])
 
   return (
       <div className="flex flex-col overflow-hidden h-screen" style={{backgroundColor: '#037EF3' }}>
