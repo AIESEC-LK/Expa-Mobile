@@ -107,15 +107,15 @@ const MARK_MATCH_PAID_MUTATION = `
 
 // Main function to change the status of the application
 export const changeStatusOfApplication = async (id, newStatus, ...args) => {
-  console.log("Changing status for application ID:", id);
-  console.log("New status:", newStatus);
+  //console.log("Changing status for application ID:", id);
+  //console.log("New status:", newStatus);
 
   let mutation;
   let variables = { id };
 
   if (args.length > 0) {
     variables.rejection_reason_id = args[0];
-    console.log("Additional argument (rejection_reason_id):", args[0]);
+    //console.log("Additional argument (rejection_reason_id):", args[0]);
   }
 
   switch (newStatus) {
@@ -139,17 +139,17 @@ export const changeStatusOfApplication = async (id, newStatus, ...args) => {
       break;
     case "UNREJECT":
       mutation = UNREJECT_APPLICATION_MUTATION;
-      console.log("Preparing to unreject application with ID:", id);
+      //console.log("Preparing to unreject application with ID:", id);
       break;
     default:
-      console.log(`Unknown status: ${newStatus}`);
+      //console.log(`Unknown status: ${newStatus}`);
       return;
   }
 
   try {
     // send request with the selected mutation and variables
     const result = await fetchGraphQL(mutation, variables);
-    console.log('Status updated:', result);
+    //console.log('Status updated:', result);
   } catch (error) {
     console.error("Error updating status:", error);
   }

@@ -13,9 +13,9 @@ const ProjectDetails = ({ appID, opportunityId }) => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                console.log('Fetching project details for APP ID:', appID, 'and opportunity ID:', opportunityId);
+                //console.log('Fetching project details for APP ID:', appID, 'and opportunity ID:', opportunityId);
                 const results = await fetchApplicationByApplicationID(appID);  // Fetch manager data
-                console.log('Results:', results);
+                //console.log('Results:', results);
                 setProject(results || []);  // Ensure we get an empty array if no results
             } catch (error) {
                 console.error('Error fetching manager data:', error);
@@ -87,7 +87,7 @@ const ProjectDetails = ({ appID, opportunityId }) => {
                     return statusLabels[key] || key;
                 })()}
                 onChangeStatus={(newStatus) => {
-                    console.log("status", appID,newStatus);
+                    //console.log("status", appID,newStatus);
                     if (newStatus === "REJECTED") {
                         openModal();
                     } else {

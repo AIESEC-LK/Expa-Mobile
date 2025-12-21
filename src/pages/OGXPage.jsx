@@ -81,7 +81,7 @@ query MyPeopleIndexQuery($managers: Boolean!) {
             <div className="flex flex-wrap gap-6">
                 {applications.length > 0 ? (
                     applications.map((app) => (
-                        console.log(app.contact_detail?.email),
+                        //console.log(app.contact_detail?.email),
                             <OGXApplicationCard
                                 id={app.id}
                                 fullname={app.full_name}

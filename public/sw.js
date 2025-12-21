@@ -20,10 +20,10 @@ const STATIC_ASSETS = [
 
 // Install event - cache static assets
 self.addEventListener('install', event => {
-  console.log('[ServiceWorker] Installing...')
+  //console.log('[ServiceWorker] Installing...')
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('[ServiceWorker] Caching static assets')
+      //console.log('[ServiceWorker] Caching static assets')
       return cache.addAll(STATIC_ASSETS).catch(err => {
         console.warn('[ServiceWorker] Some static assets failed to cache:', err)
       })
@@ -34,13 +34,13 @@ self.addEventListener('install', event => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
-  console.log('[ServiceWorker] Activating...')
+  //console.log('[ServiceWorker] Activating...')
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME && !cacheName.includes('expa-')) {
-            console.log('[ServiceWorker] Deleting old cache:', cacheName)
+            //console.log('[ServiceWorker] Deleting old cache:', cacheName)
             return caches.delete(cacheName)
           }
         })
@@ -179,7 +179,7 @@ self.addEventListener('message', event => {
 
 // Handle push notifications (when implemented)
 self.addEventListener('push', event => {
-  console.log('[ServiceWorker] Push notification received')
+  //console.log('[ServiceWorker] Push notification received')
   const options = {
     body: event.data ? event.data.text() : 'New notification',
     icon: '/AIESEC-Human-Blue.png',
@@ -194,7 +194,7 @@ self.addEventListener('push', event => {
 
 // Handle notification clicks
 self.addEventListener('notificationclick', event => {
-  console.log('[ServiceWorker] Notification clicked')
+  //console.log('[ServiceWorker] Notification clicked')
   event.notification.close()
   event.waitUntil(
     clients.matchAll({ type: 'window' }).then(clientList => {
