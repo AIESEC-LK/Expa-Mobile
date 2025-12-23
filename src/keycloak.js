@@ -47,8 +47,11 @@ function initKeycloak(onAuthenticatedCallback) {
 
             // Attempt to rehydrate stored tokens BEFORE init so Keycloak instance has them
             try {
-                const storedToken = localStorage.getItem('keycloak_token')
-                const storedRefresh = localStorage.getItem('keycloak_refresh_token')
+                const storedTokenRaw = localStorage.getItem('keycloak_token')
+                const storedRefreshRaw = localStorage.getItem('keycloak_refresh_token')
+                // guard against the literal string 'undefined' or 'null' which sometimes ends up stored
+                const storedToken = storedTokenRaw && storedTokenRaw !== 'undefined' && storedTokenRaw !== 'null' ? storedTokenRaw : null
+                const storedRefresh = storedRefreshRaw && storedRefreshRaw !== 'undefined' && storedRefreshRaw !== 'null' ? storedRefreshRaw : null
                 if (storedToken) {
                     safeLog('rehydrate: found stored tokens before init; assigning to new instance (lengths)', storedToken.length, storedRefresh ? storedRefresh.length : 0)
                     // @ts-ignore
@@ -56,6 +59,10 @@ function initKeycloak(onAuthenticatedCallback) {
                     if (storedRefresh) keycloak.refreshToken = storedRefresh
                     // set tokenParsed for immediate consumption
                     try { keycloak.tokenParsed = parseJwt(storedToken) } catch (e) {}
+                } else {
+                    // If stored values are invalid (e.g. 'undefined'), ensure we don't keep them around
+                    if (storedTokenRaw) localStorage.removeItem('keycloak_token')
+                    if (storedRefreshRaw) localStorage.removeItem('keycloak_refresh_token')
                 }
             } catch (e) {
                 safeLog('rehydration before init failed', e)
@@ -118,10 +125,15 @@ function initKeycloak(onAuthenticatedCallback) {
                         if (keycloak.refreshToken) {
                             localStorage.setItem('keycloak_refresh_token', keycloak.refreshToken)
                             safeLog('persisted keycloak_refresh_token (length)', keycloak.refreshToken ? keycloak.refreshToken.length : 0)
+                        } else {
+                            // ensure we don't leave an invalid value behind
+                            localStorage.removeItem('keycloak_refresh_token')
                         }
                         if (keycloak.token) {
                             localStorage.setItem('keycloak_token', keycloak.token)
                             safeLog('persisted keycloak_token (length)', keycloak.token ? keycloak.token.length : 0)
+                        } else {
+                            localStorage.removeItem('keycloak_token')
                         }
 
                         if (typeof onAuthenticatedCallback === 'function') onAuthenticatedCallback()
@@ -136,9 +148,13 @@ function initKeycloak(onAuthenticatedCallback) {
                                 try { keycloak.isAuthenticated = true } catch (e) {}
                                 if (keycloak.token) {
                                     localStorage.setItem('keycloak_token', keycloak.token)
+                                } else {
+                                    localStorage.removeItem('keycloak_token')
                                 }
                                 if (keycloak.refreshToken) {
                                     localStorage.setItem('keycloak_refresh_token', keycloak.refreshToken)
+                                } else {
+                                    localStorage.removeItem('keycloak_refresh_token')
                                 }
                                 if (typeof onAuthenticatedCallback === 'function') onAuthenticatedCallback()
                                 if (typeof _onAuthChange === 'function') _onAuthChange(true)
@@ -173,7 +189,9 @@ function initKeycloak(onAuthenticatedCallback) {
                         }
 
                         if (keycloak.token) localStorage.setItem('keycloak_token', keycloak.token)
+                        else localStorage.removeItem('keycloak_token')
                         if (keycloak.refreshToken) localStorage.setItem('keycloak_refresh_token', keycloak.refreshToken)
+                        else localStorage.removeItem('keycloak_refresh_token')
                         try { keycloak.isAuthenticated = true } catch (e) {}
                         if (typeof _onAuthChange === 'function') {
                             safeLog('onAuthSuccess: notifying _onAuthChange(true)')
@@ -196,6 +214,18 @@ function initKeycloak(onAuthenticatedCallback) {
                     keycloak.onTokenExpired = () => {
                         safeLog('event: onTokenExpired fired - attempting silent token refresh')
                         // Try to refresh token automatically
+                        if (!keycloak.refreshToken) {
+                            safeLog('onTokenExpired: no refreshToken available; clearing storage and notifying logout')
+                            try { keycloak.isAuthenticated = false } catch (e) {}
+                            localStorage.removeItem('keycloak_token')
+                            localStorage.removeItem('keycloak_refresh_token')
+                            if (typeof _onAuthChange === 'function') {
+                                safeLog('onTokenExpired: notifying _onAuthChange(false) due to missing refreshToken')
+                                _onAuthChange(false)
+                            }
+                            return
+                        }
+
                         keycloak.updateToken(30).then(() => {
                             safeLog('onTokenExpired: updateToken succeeded; tokenPresent?', !!keycloak.token)
                             try { keycloak.isAuthenticated = true } catch (e) {}
