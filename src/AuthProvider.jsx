@@ -33,6 +33,16 @@ export function AuthProvider({ children }) {
           await initKeycloak()
           if (!mounted) return
           const keycloakInstance = getKeycloak()
+          if (keycloakInstance?.refreshToken) {
+            try {
+              await keycloakInstance.updateToken(-1) // force refresh call
+              if (keycloakInstance.token) localStorage.setItem('keycloak_token', keycloakInstance.token)
+              if (keycloakInstance.refreshToken) localStorage.setItem('keycloak_refresh_token', keycloakInstance.refreshToken)
+            } catch (e) {
+              localStorage.removeItem('keycloak_token')
+              localStorage.removeItem('keycloak_refresh_token')
+            }
+          }
           if (keycloakInstance?.token) {
             setAuthenticated(true)
             setProfile(keycloakInstance.tokenParsed || null)
