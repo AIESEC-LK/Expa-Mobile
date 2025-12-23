@@ -61,11 +61,18 @@ function initKeycloak(onAuthenticatedCallback) {
                 safeLog('rehydration before init failed', e)
             }
 
+            // Build a silent-check-sso redirect URI that respects Vite's base path.
+            // In hosted deployments the app may be served from a subpath (e.g. /app/), so
+            // using window.location.origin + '/silent-check-sso.html' can point to the wrong location.
+            const viteBase = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+            const silentCheckSsoRedirectUri = window.location.origin + (viteBase === '' || viteBase === '/' ? '' : viteBase) + '/silent-check-sso.html'
+            safeLog('computed silentCheckSsoRedirectUri', silentCheckSsoRedirectUri)
+
             // Use native promises from keycloak-js
             keycloak
                 .init({
                     onLoad: 'check-sso',
-                    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+                    silentCheckSsoRedirectUri,
                     checkLoginIframe: true,
                     checkLoginIframeInterval: 5
                 })
