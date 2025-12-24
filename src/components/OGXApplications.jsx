@@ -15,9 +15,9 @@ const OGXApplications = ({ epID }) => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                //console.log('Fetching applications for EP ID:', epID);
+                console.log('Fetching applications for EP ID:', epID);
                 const results = await fetchPersonApplicationsFromEPid(epID);  // Fetch manager data
-                //console.log('Results:', results);
+                console.log('Results:', results);
                 setApplications(results || []);  // Ensure we get an empty array if no results
             } catch (error) {
                 console.error('Error fetching manager data:', error);

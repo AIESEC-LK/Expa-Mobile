@@ -58,11 +58,11 @@ const ApplicationCard = React.memo(({
                 <StatusDropdown
                     initialStatus={status}
                     onChangeStatus={(newStatus) => {
-                        //console.log('status', newStatus);
+                        console.log('status', newStatus);
                         if (newStatus === "REJECTED") {
                             openModal();
                         } else {
-                            //console.log("Changing status to:", newStatus);
+                            console.log("Changing status to:", newStatus);
                             handleStatusChange(id, newStatus);
                         }
                     }}

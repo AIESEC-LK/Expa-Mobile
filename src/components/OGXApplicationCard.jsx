@@ -40,7 +40,7 @@ const OGXApplicationCard = ({id, fullname, phoneNumber = "Not provided", email =
       const managerIds = [...(assignedManagers.map(manager => manager.id) || []), managerId];
       const updatedPerson = await updatePersonMutation(id, managerIds);
       // Optionally, you can update the UI state here if needed
-      //console.log('Manager updated successfully', updatedPerson);
+      console.log('Manager updated successfully', updatedPerson);
       // You could also update the assignedManagers state with the new manager
     } catch (error) {
       console.error('Error updating manager:', error);
