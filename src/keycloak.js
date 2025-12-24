@@ -48,7 +48,7 @@ function initKeycloak(onAuthenticatedCallback) {
       keycloak
         .init({
           onLoad: 'check-sso',
-          silentCheckSsoRedirectUri,
+          silentCheckSsoFallback: false,
           checkLoginIframe: true,
           checkLoginIframeInterval: 5,
         })
@@ -86,9 +86,14 @@ function initKeycloak(onAuthenticatedCallback) {
                 if (typeof _onAuthChange === 'function') _onAuthChange(true)
               }).catch(() => {
                 try { keycloak.isAuthenticated = false } catch (e) {}
-                localStorage.removeItem('keycloak_token')
-                localStorage.removeItem('keycloak_refresh_token')
+                // localStorage.removeItem('keycloak_token')
+                // localStorage.removeItem('keycloak_refresh_token')
                 if (typeof _onAuthChange === 'function') _onAuthChange(false)
+                try {
+                  if (keycloak.token || keycloak.refreshToken) {
+                    keycloak.login({ redirectUri: window.location.href })
+                  }
+                } catch (e) {}
               })
             }
           }

@@ -39,8 +39,7 @@ export function AuthProvider({ children }) {
               if (keycloakInstance.token) localStorage.setItem('keycloak_token', keycloakInstance.token)
               if (keycloakInstance.refreshToken) localStorage.setItem('keycloak_refresh_token', keycloakInstance.refreshToken)
             } catch (e) {
-              localStorage.removeItem('keycloak_token')
-              localStorage.removeItem('keycloak_refresh_token')
+              console.log("Failed to refresh token on init", e)
             }
           }
           if (keycloakInstance?.token) {
