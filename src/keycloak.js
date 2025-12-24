@@ -2,6 +2,8 @@ import Keycloak from 'keycloak-js'
 
 let keycloak = null
 let _onAuthChange = null
+let _explicitLogout = false
+let _rehydratedRefreshToken = null
 
 function mask(t) {
   try {
@@ -50,7 +52,10 @@ function initKeycloak(onAuthenticatedCallback) {
         if (token) {
           // @ts-ignore - we assign into the keycloak instance before init
           keycloak.token = token
-          if (refresh) keycloak.refreshToken = refresh
+          if (refresh) {
+            keycloak.refreshToken = refresh
+            _rehydratedRefreshToken = refresh
+          }
           keycloak.tokenParsed = parseJwt(token)
           console.log('[KEYCLOAK] rehydrated token (masked):', mask(token), 'rehydrated refresh (masked):', mask(refresh))
         } else {
@@ -109,6 +114,9 @@ function initKeycloak(onAuthenticatedCallback) {
           } else {
             // If we had a rehydrated token, try to validate it
             if (keycloak.token) {
+              if (!keycloak.refreshToken && _rehydratedRefreshToken) {
+                keycloak.refreshToken = _rehydratedRefreshToken
+              }
               console.log('[KEYCLOAK] not authenticated but rehydrated token exists - attempting updateToken(10)')
               keycloak.updateToken(10).then(() => {
                 console.log('[KEYCLOAK] updateToken(10) success - marking authenticated')
@@ -144,9 +152,12 @@ function initKeycloak(onAuthenticatedCallback) {
 
           keycloak.onAuthLogout = () => {
             console.log('[KEYCLOAK] onAuthLogout fired - clearing tokens from localStorage')
-            localStorage.removeItem('aiesec_token')
-            localStorage.removeItem('keycloak_refresh_token')
-            localStorage.removeItem('keycloak_token')
+            if (_explicitLogout) {
+              localStorage.removeItem('aiesec_token')
+              localStorage.removeItem('keycloak_refresh_token')
+              localStorage.removeItem('keycloak_token')
+            }
+            _explicitLogout = false
             try { keycloak.isAuthenticated = false } catch (e) {}
             if (typeof _onAuthChange === 'function') _onAuthChange(false)
           }
@@ -187,6 +198,8 @@ function initKeycloak(onAuthenticatedCallback) {
 
 function logout() {
   if (!keycloak) return
+  _explicitLogout = true
+    console.log('[KEYCLOAK] logout called - delegating to keycloak.logout() and clearing tokens from localStorage')
   try { keycloak.logout() } catch (e) { console.log('[KEYCLOAK] logout error', e) }
   localStorage.removeItem('aiesec_token')
   localStorage.removeItem('keycloak_token')
