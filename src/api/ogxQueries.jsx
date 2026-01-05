@@ -1,5 +1,6 @@
 // Import necessary React hooks
 import { useState, useEffect } from 'react';
+import { fetchGraphQL } from './graphql';
 
 // GraphQL query for fetching people data with managers
 export const myPeopleIndexQuery = `
@@ -37,26 +38,11 @@ export const myPeopleIndexQuery = `
 
 // Function to fetch data from GraphQL API
 export async function fetchPeopleData(params) {
-  const GRAPHQL_API_URL = import.meta.env.VITE_GIS_API;
-  const AUTH_TOKEN = import.meta.env.VITE_TOKEN;
-
   const { page, perPage, managers } = params;
 
   try {
-    const response = await fetch(GRAPHQL_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': AUTH_TOKEN,
-      },
-      body: JSON.stringify({
-        query: myPeopleIndexQuery,
-        variables: { page, perPage, managers }
-      }),
-    });
-
-    const result = await response.json();
-    return result.data.myPeople.data;
+    const data = await fetchGraphQL(myPeopleIndexQuery, { page, perPage, managers });
+    return data?.myPeople?.data ?? [];
   } catch (error) {
     console.error("Error fetching people data:", error);
     return [];

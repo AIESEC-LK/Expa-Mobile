@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import StatusDropdown from "./StatusDropdown.jsx";
 import {rejectionReasons} from "../config/statusConfig.jsx";
-import {changeStatusOfApplication} from "../api/ApplicationMutations.jsx";
 
 const ApplicationCard = React.memo(({
                                         id,
                                         fullName,
                                         home_mc,
                                         home_lc,
+                                        countryCode,
                                         phoneNumber,
                                         opportunityTitle,
                                         status,
@@ -29,23 +29,27 @@ const ApplicationCard = React.memo(({
         if (selectedReason) {
             const rejectionData = {
                 indexId: id,
-                reasonId: parseInt(rejectionReasons[selectedReason].id, 10),
+                rejection_reason_id: parseInt(rejectionReasons[selectedReason].id, 10),
                 reasonLabel: rejectionReasons[selectedReason].reason,
             };
             setRejectReason(rejectionData.reasonLabel);
-            changeStatusOfApplication(rejectionData.indexId, "REJECTED", rejectionData.reasonId);
+            // Use parent's handler so the parent can run the mutation and re-fetch the query
+            if (typeof handleStatusChange === 'function') {
+                handleStatusChange(rejectionData.indexId, "REJECT", rejectionData.rejection_reason_id);
+            }
         }
     };
 
 
     const handleConfirmClick = () => {
-        closeModal();
+        // Trigger mutation via parent, then close modal
         confirmRejectReason();
+        closeModal();
     };
 
 
     return (
-        <div className="w-full p-4 bg-white rounded-lg shadow-md border mb-4">
+        <div className="w-full p-4 bg-white rounded-lg shadow-md border mb-2">
             <div className="flex justify-between items-center mb-3">
                 <div>
                     <h2 className="text-lg font-semibold text-blue-600">{fullName}</h2>
@@ -54,12 +58,15 @@ const ApplicationCard = React.memo(({
                 <StatusDropdown
                     initialStatus={status}
                     onChangeStatus={(newStatus) => {
+                        console.log('status', newStatus);
                         if (newStatus === "REJECTED") {
                             openModal();
                         } else {
+                            console.log("Changing status to:", newStatus);
                             handleStatusChange(id, newStatus);
                         }
                     }}
+                    flow={"ICX"}
                 />
             </div>
             <p className="text-sm text-gray-500 italic mb-3">Opportunity - {opportunityTitle}</p>
@@ -74,7 +81,7 @@ const ApplicationCard = React.memo(({
             <div className="flex justify-between items-center">
                 {phoneNumber ? (
                     <a href={`tel:${phoneNumber}`} className="text-blue-600 text-sm">
-                        +{phoneNumber}
+                        {countryCode} {phoneNumber}
                     </a>
                 ) : (
                     <span className="text-red-600 text-sm">No phone</span>

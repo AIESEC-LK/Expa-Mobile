@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { statusStyles, statusOptions } from "./../config/statusConfig.jsx";
 
-const StatusDropdown = ({ initialStatus, onChangeStatus }) => {
+const StatusDropdown = ({ initialStatus, onChangeStatus, flow }) => {
     const capitalizeStatus = (status) => status.toUpperCase();
     const initialStatusCapitalized = capitalizeStatus(initialStatus);
     const [status, setStatus] = useState(initialStatusCapitalized);
@@ -46,22 +46,24 @@ const StatusDropdown = ({ initialStatus, onChangeStatus }) => {
                 <ul
                     className="absolute top-full left-0 bg-white border rounded-md shadow-md mt-1 w-full"
                     style={{
-                        zIndex: 10, // Lower z-index to ensure dropdown remains within container
-                        overflow: "hidden", // Prevent dropdown from expanding beyond boundaries
+                        zIndex: 10,
+                        overflow: "hidden",
                     }}
                 >
-                    {statusOptions[initialStatusCapitalized].map((option) => (
-                        <li
-                            key={option.label}
-                            className={`px-3 py-1 cursor-pointer hover:bg-gray-200 ${option.color}`}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleStatusChange(option.label);
-                            }}
-                        >
-                            {option.label}
-                        </li>
-                    ))}
+                    {statusOptions[initialStatusCapitalized]
+                                    .filter((option) => option.flows.includes(flow))
+                                    .map((option) => (
+                                        <li
+                                            key={option.label}
+                                            className={`px-3 py-1 cursor-pointer hover:bg-gray-200 ${option.color}`}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleStatusChange(option.label);
+                                            }}
+                                        >
+                                            {option.label}
+                                        </li>
+                                    ))}
                 </ul>
             )}
         </div>

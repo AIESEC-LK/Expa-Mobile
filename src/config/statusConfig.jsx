@@ -4,84 +4,89 @@ export const statusStyles = {
     'OPEN': 'bg-status-open-light text-status-open',
     'ACCEPTED BY HOST': 'bg-status-acceptedByHost-light text-status-acceptedByHost',
     'ACCEPTED': 'bg-status-accept-light text-status-accept',
-    'APPROVED_BY_HOME': 'bg-status-approvedByHome-light text-status-approvedByHome',
-    'APPROVED_BY_HOST': 'bg-status-approvedByHost-light text-status-approvedByHost',
+    'APPROVED BY HOME': 'bg-status-approvedByHome-light text-status-approvedByHome',
+    'APPROVED BY HOST': 'bg-status-approvedByHost-light text-status-approvedByHost',
     'APPROVED': 'bg-status-approved-light text-status-approved',
-    'REMOTE_REALIZED': 'bg-status-remoteRealized-light text-status-remoteRealized',
+    'REMOTE REALIZED': 'bg-status-remoteRealized-light text-status-remoteRealized',
     'REALIZED': 'bg-status-realized-light text-status-realized',
     'FINISHED': 'bg-status-finished-light text-status-finished',
     'COMPLETED': 'bg-status-finished-light text-status-completed',
     'REJECTED': 'bg-status-reject-light text-status-reject',
     'DECLINED': 'bg-status-reject-light text-status-reject',
-    'ACCEPTANCE_BROKEN': 'bg-status-acceptanceBroken-light text-status-acceptanceBroken',
-    'APPROVAL_BROKEN': 'bg-status-approvalBroken-light text-status-approvalBroken',
-    'REALIZATION_BROKEN': 'bg-status-realizationBroken-light text-status-realizationBroken',
+    'ACCEPTANCE BROKEN': 'bg-status-acceptanceBroken-light text-status-acceptanceBroken',
+    'APPROVAL BROKEN': 'bg-status-approvalBroken-light text-status-approvalBroken',
+    'REALIZATION BROKEN': 'bg-status-realizationBroken-light text-status-realizationBroken',
     'WITHDRAWN': 'bg-status-withdrawn-light text-status-withdrawn',
-    'REMOTE_REALIZATION_BROKEN': 'bg-status-remoteRealizationBroken-light text-status-remoteRealizationBroken',
+    'REMOTE REALIZATION BROKEN': 'bg-status-remoteRealizationBroken-light text-status-remoteRealizationBroken',
+    'PAID FOR APPROVE': 'bg-status-open-light text-status-open',
 };
+
+export const statusLabels = {
+    'APPROVED_TN_MANAGER': 'APPROVED BY HOST',
+    'APPROVED_EP_MANAGER': 'APPROVED BY HOME',
+    'MATCHED': 'ACCEPTED BY HOST',
+    'ACCEPTANCE_BROKEN': 'ACCEPTANCE BROKEN',
+    'APPROVAL_BROKEN': 'APPROVAL BROKEN',
+    'REALIZATION_BROKEN': 'REALIZATION BROKEN',
+    'REMOTE_REALIZATION_BROKEN': 'REMOTE REALIZATION BROKEN',
+    'PAID': 'PAID FOR APPROVAL',
+    'APPROVED_BY_HOST': 'APPROVED BY HOST',
+}
 
 export const statusOptions = {
     'OPEN': [
-        { label: 'ACCEPTED', color: 'bg-status-accept-light text-status-accept' },
-        { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }
-    ],
-    'ACCEPTED_BY_HOST': [
-        { label: 'ACCEPTED BY HOST', color: 'bg-status-acceptedByHost-light text-status-acceptedByHost' },
-        { label: 'APPROVED BY HOME', color: 'bg-status-approvedByHome-light text-status-approvedByHome' },
-        { label: 'APPROVED BY HOST', color: 'bg-status-approvedByHost-light text-status-approvedByHost' },
-        { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }
-    ],
-    'APPROVED_BY_HOME': [
-        { label: 'APPROVED BY HOME', color: 'bg-status-approvedByHome-light text-status-approvedByHome' },
-        { label: 'APPROVED', color: 'bg-status-approved-light text-status-approved' },
-        { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }
-    ],
-    'APPROVED_BY_HOST': [
-        { label: 'APPROVED BY HOST', color: 'bg-status-approvedByHost-light text-status-approvedByHost' },
-        { label: 'APPROVED', color: 'bg-status-approved-light text-status-approved' },
-        { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }
-    ],
-    'APPROVED': [
-        { label: 'APPROVED', color: 'bg-status-approved-light text-status-approved' },
-        { label: 'REALIZED', color: 'bg-status-realized-light text-status-realized' }
-    ],
-    'REALIZED': [
-        { label: 'REALIZED', color: 'bg-status-realized-light text-status-realized' },
-        { label: 'REMOTE REALIZED', color: 'bg-status-remoteRealized-light text-status-remoteRealized' }
+        { label: 'ACCEPT', flows: ['OGX', 'ICX'], color: 'bg-status-accept-light text-status-accept' },
+        { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
+        { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //only for OGX flow
     ],
     'MATCHED': [
-        { label: 'MATCHED', color: 'bg-status-matched-light text-status-matched' }
+        // { label: 'ACCEPTED', flows: ['ICX'], color: 'bg-status-approvedByHost-light text-status-approvedByHost' }, //only for ICX flow //TODO: Need to confirm if this status exists
+        { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for ICX flow
+        { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //Only for OGX flow
+    ],
+    'APPROVED BY HOME': [
+        { label: 'APPROVED AS HOST', flows: ['ICX'], color: 'bg-status-approvedByHome-light text-status-approvedByHome'}, //only for ICX flow
+        { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' } //only for ICX flow
+    ],
+    'APPROVED': [
+        // { label: 'REALIZE', flows: ['ICX'], color: 'bg-status-realized-light text-status-realized' }, //only for ICX flow //Need to check if can be realized // need to show the error
+    ],
+    'REALIZED': [
+        // { label: 'FINISH', flows: ['ICX'], color: 'bg-status-finished-light text-status-finished' } //only for ICX flow
     ],
     'REJECTED': [
-        { label: 'REJECTED', color: 'bg-status-reject-light text-status-reject' }
-    ],
-    'DECLINED': [
-        { label: 'DECLINED', color: 'bg-status-reject-light text-status-reject' }
+        { label: 'UNREJECT', flows: ['ICX'], color: 'bg-status-open-light text-status-open' } //only for ICX flow
     ],
     'WITHDRAWN': [
-        { label: 'WITHDRAWN', color: 'bg-status-withdrawn-light text-status-withdrawn' }
+        { label: 'OPEN', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' } //only for OGX flow
     ],
     'FINISHED': [
-        { label: 'FINISHED', color: 'bg-status-finished-light text-status-finished' }
+        // { label: 'FINISHED', color: 'bg-status-finished-light text-status-finished' }
     ],
     'COMPLETED': [
-        { label: 'COMPLETED', color: 'bg-status-finished-light text-status-completed' }
+
     ],
-    'ACCEPTANCE_BROKEN': [
-        { label: 'ACCEPTANCE BROKEN', color: 'bg-status-acceptanceBroken-light text-status-acceptanceBroken' }
+    'ACCEPTANCE BROKEN': [
+
     ],
-    'APPROVAL_BROKEN': [
-        { label: 'APPROVAL BROKEN', color: 'bg-status-approvalBroken-light text-status-approvalBroken' }
+    'APPROVAL BROKEN': [
     ],
-    'REALIZATION_BROKEN': [
-        { label: 'REALIZATION BROKEN', color: 'bg-status-realizationBroken-light text-status-realizationBroken' }
+    'ACCEPTED BY HOST': [
     ],
-    'REMOTE_REALIZATION_BROKEN': [
-        { label: 'REMOTE REALIZATION BROKEN', color: 'bg-status-remoteRealizationBroken-light text-status-remoteRealizationBroken' }
+    'REALIZATION BROKEN': [
+    ],
+    'REMOTE REALIZATION BROKEN': [
     ],
     'ACCEPTED': [
-        { label: 'ACCEPTED', color: 'bg-status-accept-light text-status-accept' }
+        // { label: 'WITHDRAW', flows: ['OGX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
+        { label: 'PAID FOR APPROVE', flows: ['OGX'], color: 'bg-status-open-light text-status-open' }, //OGX flow does not have this status
     ],
+    'APPROVED BY HOST': [
+        { label: 'REJECT', flows: ['ICX'], color: 'bg-status-reject-light text-status-reject' }, //only for OGX flow
+    ],
+    'PAID FOR APPROVAL':[
+        { label: 'APPROVE AS HOME', flows: ['OGX'], color: 'bg-status-realized-light text-status-realized' }, //only for OGX flow
+    ]
 };
 
 export const rejectionReasons = {

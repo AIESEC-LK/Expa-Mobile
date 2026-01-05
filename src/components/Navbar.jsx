@@ -1,11 +1,13 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useCurrentPersonData } from "../api/CurrentPersonQuery.jsx";
 import { useEffect, useState } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
+import { logout } from "../keycloak";
 
 const navigation = [
-    { name: 'iCX', href: '/icx/applications/my-opportunities' },
-    { name: 'oGX', href: '/ogx' },
+    { name: 'iCX', href: '/app/icx/applications/my-opportunities' },
+    { name: 'oGX', href: '/app/ogx' },
 ];
 
 function classNames(...classes) {
@@ -15,7 +17,51 @@ function classNames(...classes) {
 export default function Navbar() {
     const personData = useCurrentPersonData();
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
+    const navigate = useNavigate();
 
+    const handleSignOut = (e) => {
+        // 1. Prevent default link behavior
+        if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
+        // 2. Clear local storage immediately
+        const keysToRemove = [
+            'access_token',
+            'refresh_token',
+            'aiesec_token',
+            'keycloak_token',
+            'keycloak_refresh_token',
+        ];
+        keysToRemove.forEach((k) => localStorage.removeItem(k));
+
+        // 3. Open AIESEC Logout in a Popup
+        // This works because popups are "top-level" windows, bypassing iframe security restrictions.
+        const width = 500;
+        const height = 600;
+        const left = window.screen.width / 2 - width / 2;
+        const top = window.screen.height / 2 - height / 2;
+
+        const popup = window.open(
+            import.meta.env.VITE_AIESEC_LOGOUT_URL,
+            'AIESEC_Logout',
+            `width=${width},height=${height},top=${top},left=${left},toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no`
+        );
+
+        // 4. Wait for the logout to process, then trigger Keycloak logout
+        // We give it 2 seconds to hit the server and destroy the session.
+        setTimeout(() => {
+            // Close the popup if it's still open
+            if (popup && !popup.closed) {
+                popup.close();
+            }
+            try {
+                logout();
+                navigate('/', { replace: true });
+            } catch (err) {
+                console.warn('Keycloak logout failed', err);
+                navigate('/', { replace: true });
+            }
+        }, 2000);
+    };
     // Update the current path on navigation
     useEffect(() => {
         const handlePathChange = () => setCurrentPath(window.location.pathname);
@@ -31,7 +77,7 @@ export default function Navbar() {
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                         {/* Mobile menu button */}
-                        <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-white hover:text-white focus:outline-none">
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Open main menu</span>
                             <Bars3Icon aria-hidden="true" className="block size-6 group-data-[open]:hidden" />
@@ -40,25 +86,32 @@ export default function Navbar() {
                     </div>
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex shrink-0 items-center">
-                            <img
-                                alt="Your Company"
-                                src="/White-Blue-Logo.png"
-                                className="h-8 w-auto"
-                            />
+                            <NavLink
+                                key='/app'
+                                to='/app'
+                            >
+                                <img
+                                    alt="Your Company"
+                                    src="/White-Blue-Logo.png"
+                                    className="h-8 w-auto"
+                                />
+                            </NavLink>
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 {navigation.map((item) => (
-                                    <a
+                                    <NavLink
                                         key={item.name}
-                                        href={item.href}
-                                        className={classNames(
-                                            item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                            'rounded-md px-3 py-2 text-sm font-medium',
-                                        )}
+                                        to={item.href}
+                                        className={({ isActive }) =>
+                                            classNames(
+                                                isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                'rounded-md px-3 py-2 text-sm font-medium'
+                                            )
+                                        }
                                     >
                                         {item.name}
-                                    </a>
+                                    </NavLink>
                                 ))}
                             </div>
                         </div>
@@ -84,6 +137,7 @@ export default function Navbar() {
                                 <MenuItem>
                                     <a
                                         href="#"
+                                        onClick={handleSignOut}
                                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                     >
                                         Sign out
@@ -100,8 +154,8 @@ export default function Navbar() {
                     {navigation.map((item) => (
                         <DisclosureButton
                             key={item.name}
-                            as="a"
-                            href={item.href}
+                            as={NavLink}
+                            to={item.href}
                             className={classNames(
                                 item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                 'block rounded-md px-3 py-2 text-base font-medium',
