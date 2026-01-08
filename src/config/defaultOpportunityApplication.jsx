@@ -2,7 +2,7 @@ const applicationFetchConfig = (page, perPage, q = "", statuses = []) => ({
     page,
     perPage,
     filters: {
-        for: "people",
+        my: "opportunity",
         ...(statuses.length > 0 ? { statuses } : {})  // Only add statuses if it's not empty
     },
     q,
