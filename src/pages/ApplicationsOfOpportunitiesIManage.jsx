@@ -49,6 +49,7 @@ const ApplicationsofOpportunitiesIManage = () => {
         setLoading(true);
         try {
             const data = await fetchApplications(
+                "APPLICATION_QUERY_ICX",
                 applicationFetchConfig(page, perPage, debouncedSearchQuery, statusFilter)
             );
             setApplications(data.data);

@@ -50,6 +50,7 @@ const OGXApplicationsPage = () => {
         setLoading(true);
         try {
             const data = await fetchApplications(
+                "APPLICATION_QUERY_OGX",
                 OGXApplicationFetchConfig(page, perPage, debouncedSearchQuery, statusFilter)
             );
             setApplications(data.data);
