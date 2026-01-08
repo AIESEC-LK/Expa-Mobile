@@ -244,7 +244,7 @@ const OGXApplicationsPage = () => {
                                         handleDownload={() => handleDownload(app.id)}
                                         id={app.id}
                                         handleStatusChange={handleApplicationStatusChange} // pass handler to card
-                                        applicationType="OGX"
+                                        applicationType={"OGX"}
                                     />
                                 ))}
                             </div>
