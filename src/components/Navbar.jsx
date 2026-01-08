@@ -7,7 +7,8 @@ import { logout } from "../keycloak";
 
 const navigation = [
     { name: 'iCX', href: '/app/icx/applications/my-opportunities' },
-    { name: 'oGX', href: '/app/ogx' },
+    { name: 'oGX Signups', href: '/app/ogx' },
+    { name: 'oGX Applications', href: '/app/ogx/applications' },
 ];
 
 function classNames(...classes) {

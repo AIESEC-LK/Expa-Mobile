@@ -7,6 +7,7 @@ import LandingPage from './pages/LandingPage.jsx'
 import { Layout } from './pages/Layout.jsx'
 import OGXPage from './pages/OGXPage.jsx'
 import { useAuth } from './AuthProvider'
+import OGXApplicationsPage from "./pages/OGXApplication.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const { authenticated, loading } = useAuth()
@@ -47,9 +48,10 @@ const App = () => {
 
             {/* Protected Routes */}
             <Route path="/app" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-              <Route path="/app" element={<HomePage />} /> {/* Dashboard */}
-              <Route path="/app/icx/applications/my-opportunities" element={<ApplicationsOfOpportunitiesIManage />} />
-              <Route path="/app/ogx" element={<OGXPage />} />
+                <Route path="/app" element={<HomePage />} /> {/* Dashboard */}
+                <Route path="/app/icx/applications/my-opportunities" element={<ApplicationsOfOpportunitiesIManage />} />
+                <Route path="/app/ogx/sign-ups" element={<OGXApplicationsPage />} />
+                <Route path="/app/ogx/applications" element={<OGXPage />} />
             </Route>
           </Routes>
         </Router>

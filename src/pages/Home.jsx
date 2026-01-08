@@ -33,7 +33,12 @@ const HomePage = () => {
                 <Card
                     title="oGX"
                     description="View oGX Signups and Assign Managers"
-                    link="/app/ogx"
+                    link="/app/ogx/sign-ups"
+                />
+                <Card
+                    title="oGX"
+                    description="View oGX Signup Applications"
+                    link="/app/ogx/applications"
                 />
             </div>
         </div>
