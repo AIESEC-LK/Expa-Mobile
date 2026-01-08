@@ -133,10 +133,19 @@ export const APPLICATION_QUERY_OGX = `
 /**
  * Fetch applications using the shared GraphQL helper.
  * Returns the `allOpportunityApplication` payload (or null if not present).
- * @param APPLICATION_QUERY
+ * @param queryName
  * @param {Object} variables - Variables for the APPLICATION_QUERY
  */
-export const fetchApplications = async (APPLICATION_QUERY, variables) => {
-  const data = await fetchGraphQL(APPLICATION_QUERY, variables);
+export const fetchApplications = async (queryName, variables) => {
+  const queries = {
+    APPLICATION_QUERY_ICX,
+    APPLICATION_QUERY_OGX
+  };
+
+  const query = queries[queryName];
+  if (!query) {
+    throw new Error(`Unknown query: ${queryName}`);
+  }
+  const data = await fetchGraphQL(query, variables);
   return data?.allOpportunityApplication ?? null;
 };
