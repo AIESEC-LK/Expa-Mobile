@@ -96,6 +96,14 @@ export const APPLICATION_QUERY_OGX = `
           is_gep
           __typename
         }
+        host_lc @include(if: $host_lc) {
+          name
+          __typename
+        }
+        host_mc @include(if: $host_mc) {
+          name
+          __typename
+        }
         __typename
       }
       person {
@@ -106,14 +114,6 @@ export const APPLICATION_QUERY_OGX = `
         contact_detail {
           phone @include(if: $phone_number)
           country_code @include(if: $phone_number)
-          __typename
-        }
-        host_lc @include(if: $host_lc) {
-          name
-          __typename
-        }
-        host_mc @include(if: $host_mc) {
-          name
           __typename
         }
         __typename
