@@ -66,7 +66,7 @@ export const APPLICATION_QUERY_ICX = `
 `;
 
 export const APPLICATION_QUERY_OGX = `
-  query ApplicationIndexQuery($page: Int, $perPage: Int, $filters: ApplicationFilter, $sort: String, $q: String, $applicant_name: Boolean!, $opportunity: Boolean!, $status: Boolean!, $slot: Boolean!, $home_mc: Boolean!, $home_lc: Boolean!, $phone_number: Boolean!) {
+  query ApplicationIndexQuery($page: Int, $perPage: Int, $filters: ApplicationFilter, $sort: String, $q: String, $applicant_name: Boolean!, $opportunity: Boolean!, $status: Boolean!, $slot: Boolean!, $host_mc: Boolean!, $host_lc: Boolean!, $phone_number: Boolean!) {
   allOpportunityApplication(
     page: $page
     per_page: $perPage
