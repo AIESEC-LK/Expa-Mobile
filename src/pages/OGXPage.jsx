@@ -14,7 +14,7 @@ const OGXPage = () => {
             const query = `
                 
 query MyPeopleIndexQuery($managers: Boolean!) {
-    myPeople {
+    allPeople {
         data {
             id
             full_name    

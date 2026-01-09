@@ -1,6 +1,6 @@
 import { fetchGraphQL } from './graphql';
 
-export const APPLICATION_QUERY = `
+export const APPLICATION_QUERY_ICX = `
   query ApplicationIndexQuery($page: Int, $perPage: Int, $filters: ApplicationFilter, $sort: String, $q: String, $applicant_name: Boolean!, $opportunity: Boolean!, $status: Boolean!, $slot: Boolean!, $home_mc: Boolean!, $home_lc: Boolean!, $phone_number: Boolean!) {
   allOpportunityApplication(
     page: $page
@@ -65,12 +65,87 @@ export const APPLICATION_QUERY = `
 }
 `;
 
+export const APPLICATION_QUERY_OGX = `
+  query ApplicationIndexQuery($page: Int, $perPage: Int, $filters: ApplicationFilter, $sort: String, $q: String, $applicant_name: Boolean!, $opportunity: Boolean!, $status: Boolean!, $slot: Boolean!, $host_mc: Boolean!, $host_lc: Boolean!, $phone_number: Boolean!) {
+  allOpportunityApplication(
+    page: $page
+    per_page: $perPage
+    q: $q
+    filters: $filters
+    sort: $sort
+  ) {
+    data {
+      id
+      status @include(if: $status)
+      slot @include(if: $slot) {
+        title
+        start_date
+        end_date
+        applications_close_date
+        openings
+        __typename
+      }
+      opportunity {
+        id
+        title @include(if: $opportunity)
+        opportunity_duration_type {
+          duration_type
+          __typename
+        }
+        organisation {
+          is_gep
+          __typename
+        }
+        home_mc @include(if: $host_mc) {
+          name
+          __typename
+        }
+        host_lc @include(if: $host_lc) {
+          name
+          __typename
+        }
+        __typename
+      }
+      person {
+        id
+        full_name @include(if: $applicant_name)
+        profile_photo @include(if: $applicant_name)
+        email
+        contact_detail {
+          phone @include(if: $phone_number)
+          country_code @include(if: $phone_number)
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    paging {
+      total_pages
+      current_page
+      total_items
+      __typename
+    }
+  }
+}
+`;
+
 /**
  * Fetch applications using the shared GraphQL helper.
  * Returns the `allOpportunityApplication` payload (or null if not present).
+ * @param queryName
  * @param {Object} variables - Variables for the APPLICATION_QUERY
  */
-export const fetchApplications = async (variables) => {
-  const data = await fetchGraphQL(APPLICATION_QUERY, variables);
+export const fetchApplications = async (queryName, variables) => {
+  const queries = {
+    APPLICATION_QUERY_ICX,
+    APPLICATION_QUERY_OGX
+  };
+
+  const query = queries[queryName];
+  if (!query) {
+    throw new Error(`Unknown query: ${queryName}`);
+  }
+  const data = await fetchGraphQL(query, variables);
   return data?.allOpportunityApplication ?? null;
 };

@@ -6,8 +6,9 @@ import applicationFetchConfig from "../config/defaultOpportunityApplication.jsx"
 import { fetchApplicationCV } from "../api/DownloadCV.jsx";
 import { changeStatusOfApplication } from "../api/ApplicationMutations.jsx";
 import {statusLabels} from "../config/statusConfig.jsx";
+import OGXApplicationFetchConfig from "../config/OGXApplicationFetchConfig.jsx";
 
-const ApplicationsofOpportunitiesIManage = () => {
+const OGXApplicationsPage = () => {
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -49,8 +50,8 @@ const ApplicationsofOpportunitiesIManage = () => {
         setLoading(true);
         try {
             const data = await fetchApplications(
-                "APPLICATION_QUERY_ICX",
-                applicationFetchConfig(page, perPage, debouncedSearchQuery, statusFilter)
+                "APPLICATION_QUERY_OGX",
+                OGXApplicationFetchConfig(page, perPage, debouncedSearchQuery, statusFilter)
             );
             setApplications(data.data);
             setTotalPages(Math.ceil(data.paging.total_items / perPage));
@@ -170,7 +171,7 @@ const ApplicationsofOpportunitiesIManage = () => {
                 </div>
             ) : (
                 <div className="flex flex-col flex-1 items-center w-full bg-gray-50 min-h-0">
-                <div className="flex flex-col w-full max-w-3xl p-4 sm:p-6">
+                    <div className="flex flex-col w-full max-w-3xl p-4 sm:p-6">
                         <div className="flex flex-col gap-4 mb-4">
                             {/* Search */}
                             <input
@@ -239,23 +240,23 @@ const ApplicationsofOpportunitiesIManage = () => {
                                             return statusLabels[key] || key;
                                         })()}
                                         slot={app.slot.title}
-                                        home_mc={app.person.home_mc.name}
-                                        home_lc={app.person.home_lc.name}
+                                        home_mc={app.opportunity.home_mc.name}
+                                        home_lc={app.opportunity.host_lc.name}
                                         handleDownload={() => handleDownload(app.id)}
                                         id={app.id}
                                         handleStatusChange={handleApplicationStatusChange} // pass handler to card
-                                        applicationType={"ICX"}
+                                        applicationType={"OGX"}
                                     />
                                 ))}
                             </div>
-                         </div>
-                    {showPagination && (
-                        <PaginationControls
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    )}
+                        </div>
+                        {showPagination && (
+                            <PaginationControls
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        )}
                     </div>
                 </div>
             )}
@@ -263,4 +264,4 @@ const ApplicationsofOpportunitiesIManage = () => {
     );
 };
 
-export default ApplicationsofOpportunitiesIManage;
+export default OGXApplicationsPage;

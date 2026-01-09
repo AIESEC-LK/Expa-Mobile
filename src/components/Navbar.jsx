@@ -7,7 +7,8 @@ import { logout } from "../keycloak";
 
 const navigation = [
     { name: 'iCX', href: '/app/icx/applications/my-opportunities' },
-    { name: 'oGX', href: '/app/ogx' },
+    { name: 'oGX Signups', href: '/app/ogx/sign-ups' },
+    { name: 'oGX Applications', href: '/app/ogx/applications' },
 ];
 
 function classNames(...classes) {
@@ -103,6 +104,7 @@ export default function Navbar() {
                                     <NavLink
                                         key={item.name}
                                         to={item.href}
+                                        end
                                         className={({ isActive }) =>
                                             classNames(
                                                 isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -155,6 +157,7 @@ export default function Navbar() {
                         <DisclosureButton
                             key={item.name}
                             as={NavLink}
+                            end
                             to={item.href}
                             className={classNames(
                                 item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
