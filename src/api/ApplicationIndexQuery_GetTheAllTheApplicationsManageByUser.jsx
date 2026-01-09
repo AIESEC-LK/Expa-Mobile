@@ -96,11 +96,11 @@ export const APPLICATION_QUERY_OGX = `
           is_gep
           __typename
         }
-        host_lc @include(if: $host_lc) {
+        home_mc @include(if: $host_mc) {
           name
           __typename
         }
-        host_mc @include(if: $host_mc) {
+        host_lc @include(if: $host_lc) {
           name
           __typename
         }
